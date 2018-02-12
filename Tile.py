@@ -15,5 +15,6 @@ class Tile:
 # Testing example
 #example_tile = Tile("floor")
 #print(example_tile.type, example_tile.entity, example_tile.noise)
+#> FLOOR None 0
 
 
