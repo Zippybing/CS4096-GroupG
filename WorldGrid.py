@@ -1,23 +1,29 @@
 #import Tile
 
+import Tile
+
 class WorldGrid:
     def __init__(self):
         self.grid = None
-        
     #Initialize a map filled with tiles.
     def createMap(self, x,y):
-        self.grid = [ [Tile(0) for _ in range(x)] for _ in range(y)]
+        self.grid = [ [Tile.Floor('White') for _ in range(y)] for _ in range(x)]
         
     #Print to the console ASCII representation of map
     def displayGrid(self):
         for i in self.grid:
             for j in i:
-                print('['+str(j.noise)+']', end='')
+                print('['+str(j.print_icon())+']', end='')
             print()
             
     #Used by the map generator function to place entities in specific tile  
     def placeEntity(self, x, y, e):
-        self.grid[x][y] = e
+        self.grid[x][y].entity = e
+        
+    #Used to move entities from one tile to another
+    def moveEntity(self, x1, y1, x2, y2):
+        self.grid[x2][y2].entity = self.grid[x1][y1].entity
+        self.grid[x1][y1].entity = None
         
     #Resets all sound values to 0
     def clearNoises(self):
@@ -37,9 +43,3 @@ class WorldGrid:
             self.distributeNoise(x, y-1, noise-1)    #up
             self.distributeNoise(x, y+1, noise-1)    #down
             return
-
-#Temporary: PLS IGNORE        
-class Tile:
-    def __init__(self, noise, generator = False):
-        self.noise = noise
-        self.generator = generator
