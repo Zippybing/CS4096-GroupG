@@ -28,6 +28,7 @@ class Fixture(Entity):
 '''Sub-Entities of Creature'''
 class Hero(Creature):
     def __init__(self, icon, direction, speed, health, name):
+        self.rep = [('Hero', '[H]')]
         Creature.__init__(self, icon, direction, speed, health, name)
 
 
