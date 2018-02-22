@@ -21,12 +21,16 @@ class Floor(Tile):
     def __init__(self, color, entity=None):
         Tile.__init__(self, color, entity)
         self.icon = '.'
+        self.color = 'light green'
+        self.rep = [('Floor', '[.]')]
 
 
 class Wall(Tile):
     def __init__(self, color, entity=None):
         Tile.__init__(self, color, entity)
         self.icon = '#'
+        self.color = 'dark red'
+        self.rep = [('Wall', '[#]')]
 
     # TO-DO: Add copy function
 

@@ -1,6 +1,7 @@
 #import Tile
 
 import Tile
+#import urwid
 
 class WorldGrid:
     def __init__(self):
@@ -11,11 +12,17 @@ class WorldGrid:
         
     #Print to the console ASCII representation of map
     def displayGrid(self):
+        tmp = [('streak', "\n")]
         for i in self.grid:
             for j in i:
-                print('['+str(j.print_icon())+']', end='')
-            print()
-            
+                #tmp +='['+str(j.print_icon())+']'
+                if(j.entity != None ):
+                    tmp += j.entity.rep
+                else:
+                    tmp += j.rep
+            tmp+= [('streak', '\n')]
+        
+        return tmp
     #Used by the map generator function to place entities in specific tile  
     def placeEntity(self, x, y, e):
         self.grid[x][y].entity = e
