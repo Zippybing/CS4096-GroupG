@@ -17,7 +17,7 @@ class Creature(Entity):
 
 class Item(Entity):
     def __init__(self, icon, direction):
-        Entity.__init__(self, direction)
+        Entity.__init__(self, icon, direction)
 
 class Fixture(Entity):
     def __init__(self, icon, direction, state):
@@ -33,7 +33,7 @@ class Hero(Creature):
 
 class Monster(Creature):
     def __init__(self, icon, direction, speed, health, name, drops = []):
-        Creature.__init__(self, direction, speed, health, name)
+        Creature.__init__(self, icon, direction, speed, health, name)
         drops = []
 
     def addDrop(self, drops):

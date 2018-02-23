@@ -1,6 +1,7 @@
 #import Tile
-
+import sys
 import Tile
+import Entities
 
 class WorldGrid:
     def __init__(self):
@@ -11,10 +12,12 @@ class WorldGrid:
         
     #Print to the console ASCII representation of map
     def displayGrid(self):
-        for i in self.grid:
-            for j in i:
-                print('['+str(j.print_icon())+']', end='')
-            print()
+        for y in range(len(self.grid[0])-1):
+            for x in range(len(self.grid)-1):
+                sys.stdout.write('['+self.grid[x][y].print_icon()+']')
+                #sys.stdout.write('['+str(issubclass(type(self.grid[x][y].entity),Entities.Entity))+']')
+            sys.stdout.write('\n')
+            sys.stdout.flush()
             
     #Used by the map generator function to place entities in specific tile  
     def placeEntity(self, x, y, e):
@@ -22,6 +25,24 @@ class WorldGrid:
         
     #Used to move entities from one tile to another
     def moveEntity(self, x1, y1, x2, y2):
+        # MUY IMPORTANTE: issubclass(type(self.grid[x][y].entity),Entities.Entity)
+        agent = self.grid[x1][y1].entity
+        target = self.grid[x2][y2].entity
+        
+        if target is not None:
+            if type(agent) == Entities.Hero:
+                if issubclass(type(target),Entities.Item):
+                    print("Picked up item!")
+                    # Add item to inventory
+                    # Move hero to space
+                elif type(target) == Entities.Monster:
+                    # Kill Hero
+                    # Do not move
+                    print("YOU REALLY DIED")
+            if type(agent) == Entities.Monster:
+                if type(target) == Entities.Hero:
+                    print("YOU DIED")
+                    
         self.grid[x2][y2].entity = self.grid[x1][y1].entity
         self.grid[x1][y1].entity = None
         
