@@ -9,7 +9,7 @@ def main():
     game.world.createMap(8,8)
     game.world.placeEntity(1,2,Entities.Hero('H',0,1,5,'Dickbutt'))
     game.world.placeEntity(4,3,Entities.Monster('M',0,1,5,'Fred'))
-    game.world.placeEntity(3,4,Entities.Key(chr(1421),0))
+    game.world.placeEntity(3,4,Entities.Key("K",0))
     heroCoord = [1,2]
     monsterCoord = [4,3]
    
