@@ -16,17 +16,26 @@ class Tile(object):
         if self.entity == None:
             return self.icon
         return self.entity.icon
+    
+
+    def print_rep(self):
+        if self.entity == None:
+            return self.rep
+        return self.entity.rep
+    
         
 class Floor(Tile):
     def __init__(self, color, entity=None):
         Tile.__init__(self, color, entity)
         self.icon = '.'
+        self.rep = [(0,0,2)]
 
 
 class Wall(Tile):
     def __init__(self, color, entity=None):
         Tile.__init__(self, color, entity)
         self.icon = '#'
+        self.rep = [(1,0,0)]
 
     # TO-DO: Add copy function
 

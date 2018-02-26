@@ -28,11 +28,14 @@ class Fixture(Entity):
 '''Sub-Entities of Creature'''
 class Hero(Creature):
     def __init__(self, icon, direction, speed, health, name):
+        self.rep = [(7,2,2)]
+        
         Creature.__init__(self, icon, direction, speed, health, name)
 
 
 class Monster(Creature):
     def __init__(self, icon, direction, speed, health, name, drops = []):
+        self.rep = [(1,1,2)]
         Creature.__init__(self, icon, direction, speed, health, name)
         drops = []
 
@@ -60,6 +63,7 @@ class Door(Fixture):
 '''Sub-Entities of Item'''
 class Key(Item):
     def __init__(self, icon, direction, door=None):
+        self.rep = [(5,4,2)]
         Item.__init__(self, icon, direction)
         self.door = door
 

@@ -1,18 +1,25 @@
 import GameState
 import Entities
 import random
-
+from asciimatics.screen import *
+import visual
+mastergrid = ''
 def main():
     game = GameState.GameState()
     game.world.createMap(8,8)
     game.world.placeEntity(1,2,Entities.Hero('H',0,1,5,'Dickbutt'))
     game.world.placeEntity(4,3,Entities.Monster('M',0,1,5,'Fred'))
-    game.world.placeEntity(3,4,Entities.Key('K',0))
+    game.world.placeEntity(3,4,Entities.Key(chr(1421),0))
     heroCoord = [1,2]
     monsterCoord = [4,3]
+   
     while True:
         # Hero Turn
-        game.world.displayGrid()
+        mastergrid = game.world.displayGrid()
+        print(mastergrid[1])
+        #for i in range(0, 1500):
+            #print(i,"  ",chr(i))
+        visual.showmap(mastergrid)
         userInput = input('Give input: ').upper()
         if userInput == '0':
             # Hero Faces UP
