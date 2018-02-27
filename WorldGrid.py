@@ -47,6 +47,8 @@ class WorldGrid:
                         if issubclass(type(target),Entities.Item):
                             print("Picked up item!")
                             # Add item to inventory
+                            agent.addToInventory(target)
+                            agent.printInventory()
                             # Move hero to space
                         elif type(target) == Entities.Monster:
                             # Kill Hero
