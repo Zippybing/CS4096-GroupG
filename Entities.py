@@ -1,13 +1,15 @@
 class Entity(object):
-    def __init__(self, icon, direction):
+    def __init__(self, icon, direction, x, y):
         self.icon = icon
         self.direction = direction
+        self.x = x
+        self.y = y
 
 
 '''Sub-Entities of Entity'''
 class Creature(Entity):
-    def __init__(self, icon, direction, speed, health, name):
-        Entity.__init__(self, icon, direction)
+    def __init__(self, icon, direction, x, y, speed, health, name):
+        Entity.__init__(self, icon, direction, x, y)
         self.speed = speed
         self.health = health
         self.name = name
@@ -16,24 +18,24 @@ class Creature(Entity):
         self.direction = direction
 
 class Item(Entity):
-    def __init__(self, icon, direction):
-        Entity.__init__(self, icon, direction)
+    def __init__(self, icon, direction, x, y):
+        Entity.__init__(self, icon, direction, x, y)
 
 class Fixture(Entity):
-    def __init__(self, icon, direction, state):
+    def __init__(self, icon, direction, x, y, state):
         Entity.__init__(self, direction)
         self.state = state
 
 
 '''Sub-Entities of Creature'''
 class Hero(Creature):
-    def __init__(self, icon, direction, speed, health, name):
-        Creature.__init__(self, icon, direction, speed, health, name)
+    def __init__(self, icon, direction, x, y, speed, health, name):
+        Creature.__init__(self, icon, direction, x, y, speed, health, name)
 
 
 class Monster(Creature):
-    def __init__(self, icon, direction, speed, health, name, drops = []):
-        Creature.__init__(self, icon, direction, speed, health, name)
+    def __init__(self, icon, direction, x, y, speed, health, name, drops = []):
+        Creature.__init__(self, icon, direction, x, y, speed, health, name)
         drops = []
 
     def addDrop(self, drops):
@@ -43,7 +45,7 @@ class Monster(Creature):
             
 '''Sub-Entities of Fixtures'''
 class Door(Fixture):
-    def __init__(self, icon, direction, state, locked, key=None):
+    def __init__(self, icon, direction, x, y, state, locked, key=None):
         Item.__init__(self, icon, state, direction)
         self.locked = locked
         self.key = key
@@ -59,8 +61,8 @@ class Door(Fixture):
 
 '''Sub-Entities of Item'''
 class Key(Item):
-    def __init__(self, icon, direction, door=None):
-        Item.__init__(self, icon, direction)
+    def __init__(self, icon, direction, x, y, door=None):
+        Item.__init__(self, icon, direction, x, y)
         self.door = door
 
 class Potion(Item):
@@ -70,7 +72,7 @@ class Torch(Item):
     pass
 
 class Chest(Fixture):
-    def __init__(self, icon, direction, state, locked, items = [], key=None):
+    def __init__(self, icon, direction, x, y, state, locked, items = [], key=None):
         Item.__init__(self, icon, state, direction)
         self.items = items
         self.locked = locked

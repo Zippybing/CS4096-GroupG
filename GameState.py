@@ -12,6 +12,8 @@ class GameState:
         self.level = None #random seed for genration or actual name
         self.world = WorldGrid.WorldGrid() #is a worldgrid object
         self.seed = None    #will have a random seed that is used to generate the worlds in a deterministic way
+        self.hero = None
+        self.monster = None
     
 
     def scoreinc(self, value):

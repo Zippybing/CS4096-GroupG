@@ -4,15 +4,17 @@ import random
 
 def main():
     game = GameState.GameState()
-    game.world.createMap(8,8)
-    game.world.placeEntity(1,2,Entities.Hero('H',0,1,5,'Dickbutt'))
-    game.world.placeEntity(4,3,Entities.Monster('M',0,1,5,'Fred'))
-    game.world.placeEntity(3,4,Entities.Key('K',0))
-    heroCoord = [1,2]
+    game.world.createMap(20,8)
+    game.hero = Entities.Hero('H',0,1,2,1,5,'Steve')
+    game.monster = Entities.Monster('M',0,4,3,1,5,'Fred')
+    game.world.placeEntity(1,2,game.hero)
+    game.world.placeEntity(4,3,game.monster)
+    game.world.placeEntity(3,4,Entities.Key('K',0,3,4))
     monsterCoord = [4,3]
     while True:
-        # Hero Turn
         game.world.displayGrid()
+    
+        # Hero Turn
         userInput = input('Give input: ').upper()
         if userInput == '0':
             # Hero Faces UP
@@ -28,20 +30,16 @@ def main():
             x = 0
         elif userInput == 'W':
             # Hero Moves UP
-            game.world.moveEntity(heroCoord[0],heroCoord[1],heroCoord[0],heroCoord[1]-1)
-            heroCoord[1] -= 1
+            game.world.moveEntity(game.hero.x,game.hero.y,game.hero.x,game.hero.y-1)
         elif userInput == 'A':
             # Hero Moves LEFT
-            game.world.moveEntity(heroCoord[0],heroCoord[1],heroCoord[0]-1,heroCoord[1])
-            heroCoord[0] -= 1
+            game.world.moveEntity(game.hero.x,game.hero.y,game.hero.x-1,game.hero.y)
         elif userInput == 'S':
             # Hero Moves DOWN
-            game.world.moveEntity(heroCoord[0],heroCoord[1],heroCoord[0],heroCoord[1]+1)
-            heroCoord[1] += 1
+            game.world.moveEntity(game.hero.x,game.hero.y,game.hero.x,game.hero.y+1)
         elif userInput == 'D':
             # Hero Moves RIGHT
-            game.world.moveEntity(heroCoord[0],heroCoord[1],heroCoord[0]+1,heroCoord[1])
-            heroCoord[0] += 1
+            game.world.moveEntity(game.hero.x,game.hero.y,game.hero.x+1,game.hero.y)
         else:
             # Bad input!
             break
@@ -51,9 +49,7 @@ def main():
         
         xRand = random.randint(-1,1)
         yRand = random.randint(-1,1)
-        game.world.moveEntity(monsterCoord[0],monsterCoord[1],monsterCoord[0]+xRand,monsterCoord[1]+yRand)
-        monsterCoord[0] += xRand
-        monsterCoord[1] += yRand
+        game.world.moveEntity(game.monster.x,game.monster.y,game.monster.x+xRand,game.monster.y+yRand)
 
         # Noise Cleanup and other Cleanup
         

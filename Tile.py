@@ -14,21 +14,10 @@ class Tile(object):
         
     def print_icon(self):
         if self.entity == None:
-            return self.icon
+            return '.'
         return self.entity.icon
-        
-class Floor(Tile):
-    def __init__(self, color, entity=None):
-        Tile.__init__(self, color, entity)
-        self.icon = '.'
 
-
-class Wall(Tile):
-    def __init__(self, color, entity=None):
-        Tile.__init__(self, color, entity)
-        self.icon = '#'
-
-    # TO-DO: Add copy function
+# TO-DO: Add copy function
 
 # Testing example
 #example_tile = Tile("floor")
