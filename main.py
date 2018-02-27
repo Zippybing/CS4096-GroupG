@@ -11,6 +11,7 @@ def main():
     game.world.placeEntity(4,3,game.monster)
     game.world.placeEntity(3,4,Entities.Key('K',0,3,4))
     game.world.placeEntity(5,5,Entities.Gem('G',0,5,5,100))
+    game.world.placeEntity(7,3,Entities.Shoes('S',0,7,3))
     monsterCoord = [4,3]
     while True:
         game.world.displayGrid()

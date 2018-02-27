@@ -88,6 +88,11 @@ class Rock(Item):
     def __init__(self, icon, direction, x, y):
         Item.__init__(self, icon, direction, x, y)
 
+class Shoes(Item):
+    def __init__(self, icon, direction, x, y):
+        Item.__init__(self, icon, direction, x, y)
+
+
 '''Sub-Entities of Fixture'''
 class Chest(Fixture):
     def __init__(self, icon, direction, x, y, state, locked, items = [], key=None):
