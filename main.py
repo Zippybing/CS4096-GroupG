@@ -31,16 +31,16 @@ def main():
             x = 0
         elif userInput == 'W':
             # Hero Moves UP
-            game.world.moveEntity(game.hero.x,game.hero.y,game.hero.x,game.hero.y-1)
+            game.world.moveEntity(game.hero.x,game.hero.y,game.hero.x,game.hero.y-1,game)
         elif userInput == 'A':
             # Hero Moves LEFT
-            game.world.moveEntity(game.hero.x,game.hero.y,game.hero.x-1,game.hero.y)
+            game.world.moveEntity(game.hero.x,game.hero.y,game.hero.x-1,game.hero.y,game)
         elif userInput == 'S':
             # Hero Moves DOWN
-            game.world.moveEntity(game.hero.x,game.hero.y,game.hero.x,game.hero.y+1)
+            game.world.moveEntity(game.hero.x,game.hero.y,game.hero.x,game.hero.y+1,game)
         elif userInput == 'D':
             # Hero Moves RIGHT
-            game.world.moveEntity(game.hero.x,game.hero.y,game.hero.x+1,game.hero.y)
+            game.world.moveEntity(game.hero.x,game.hero.y,game.hero.x+1,game.hero.y,game)
         else:
             # Bad input!
             break
@@ -50,8 +50,9 @@ def main():
         
         xRand = random.randint(-1,1)
         yRand = random.randint(-1,1)
-        game.world.moveEntity(game.monster.x,game.monster.y,game.monster.x+xRand,game.monster.y+yRand)
+        game.world.moveEntity(game.monster.x,game.monster.y,game.monster.x+xRand,game.monster.y+yRand,None)
 
+        print(game.score)
         # Noise Cleanup and other Cleanup
         
        
