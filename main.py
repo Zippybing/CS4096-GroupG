@@ -16,11 +16,11 @@ def main():
     while True:
         # Hero Turn
         mastergrid = game.world.displayGrid()
-        print(mastergrid[1])
+        #print(mastergrid[1])
         #for i in range(0, 1500):
             #print(i,"  ",chr(i))
-        visual.showmap(mastergrid)
-        userInput = input('Give input: ').upper()
+        
+        userInput = visual.showmap(mastergrid, game)
         if userInput == '0':
             # Hero Faces UP
             x = 0

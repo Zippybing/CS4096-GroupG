@@ -20,8 +20,8 @@ class WorldGrid:
             for x in range(len(self.grid)-1):
                 #sys.stdout.write('['+self.grid[x][y].print_icon()+']')
                 #sys.stdout.write('['+str(issubclass(type(self.grid[x][y].entity),Entities.Entity))+']')
-                rowtext += self.grid[x][y].print_icon()
-                colorrow += self.grid[x][y].print_rep()
+                rowtext += ' '+self.grid[x][y].print_icon()+' '
+                colorrow += self.grid[x][y].print_rep() + self.grid[x][y].print_rep() + self.grid[x][y].print_rep()
             #sys.stdout.write('\n')
             gridtext[0] += [str(rowtext)]
             gridtext[1] += [colorrow]
