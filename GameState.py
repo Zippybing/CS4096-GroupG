@@ -16,6 +16,10 @@ class GameState:
         self.monster = None
     
 
+    def checkActive(self):
+        return self.hero.isAlive and not self.hero.hasEscaped
+    
+    #delete this??
     def scoreinc(self, value):
         self.score += value
     

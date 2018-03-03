@@ -23,15 +23,17 @@ class Item(Entity):
 
 class Fixture(Entity):
     def __init__(self, icon, direction, x, y, state):
-        Entity.__init__(self, direction)
+        Entity.__init__(self, icon, direction, x, y)
         self.state = state
 
 
 '''Sub-Entities of Creature'''
 class Hero(Creature):
-    def __init__(self, icon, direction, x, y, speed, health, name):
+    def __init__(self, icon, direction, x, y, speed, health, name, inventory = []):
         Creature.__init__(self, icon, direction, x, y, speed, health, name)
-
+        self.hasEscaped = False
+        self.isAlive = True
+        self.inventory = inventory
 
 class Monster(Creature):
     def __init__(self, icon, direction, x, y, speed, health, name, drops = []):
@@ -46,7 +48,7 @@ class Monster(Creature):
 '''Sub-Entities of Fixtures'''
 class Door(Fixture):
     def __init__(self, icon, direction, x, y, state, locked, key=None):
-        Item.__init__(self, icon, state, direction)
+        Fixture.__init__(self, icon, state, direction)
         self.locked = locked
         self.key = key
 
@@ -59,14 +61,20 @@ class Door(Fixture):
     def closeDoor(self):
         self.state = 'Closed'
 
+class Exit(Fixture):
+    def __init__(self, icon, direction, x, y, state=None):
+        Fixture.__init__(self, icon, direction, x, y, state)
+        
 '''Sub-Entities of Item'''
 class Key(Item):
-    def __init__(self, icon, direction, x, y, door=None):
+    def __init__(self, icon, direction, x, y, door=1234):
         Item.__init__(self, icon, direction, x, y)
         self.door = door
 
 class Potion(Item):
-    pass
+    def __init__(self, icon, direction, x, y, color='Red'):
+        Item.__init__(self, icon, direction, x, y)
+        self.color = color
 
 class Torch(Item):
     pass

@@ -28,8 +28,9 @@ class WorldGrid:
     def placeEntity(self, x, y, e):
         self.grid[x][y].entity = e
         
+        
     #Used to move entities from one tile to another
-    def moveEntity(self, x1, y1, x2, y2):
+    def tryMoveEntity(self, x1, y1, x2, y2):
         # MUY IMPORTANTE: issubclass(type(self.grid[x][y].entity),Entities.Entity)
         print(x1, y1, x2, y2)
         # QUICK HACK: DON'T LET ENTITY MOVE ONTO ITSELF
@@ -48,21 +49,39 @@ class WorldGrid:
                             print("Picked up item!")
                             # Add item to inventory
                             # Move hero to space
+                            agent.inventory.append(target)
+                            self.moveEntity(x1, y1, x2, y2, agent, None)
                         elif type(target) == Entities.Monster:
                             # Kill Hero
                             # Do not move
                             print("YOU REALLY DIED")
+                            agent.isAlive = False
+                            self.placeEntity(x1,y1,None)
+                            return
+                        elif type(target) == Entities.Exit:
+                            print("YOU Won")
+                            agent.hasEscaped = True
+                            self.placeEntity(x1,y1,None)
+                            return
                     #Monster
-                    if type(agent) == Entities.Monster:
+                    elif type(agent) == Entities.Monster:
                         if type(target) == Entities.Hero:
                             print("YOU DIED")
-                        
-            agent.x = x2
-            agent.y = y2
-            self.grid[x2][y2].entity = self.grid[x1][y1].entity
-            self.grid[x1][y1].entity = None
-            print(self.grid[x2][y2].entity, self.grid[x1][y1].entity)
-        
+                            target.isAlive = False
+                            self.moveEntity(x1, y1, x2, y2, agent, None)
+            else:
+                self.moveEntity(x1, y1, x2, y2, agent, target)
+    
+    def moveEntity(self, x1, y1, x2, y2, agent, target):
+        agent.x = x2
+        agent.y = y2
+        if target:
+            target.x = x1
+            target.y = y1
+        self.grid[x2][y2].entity = agent
+        self.grid[x1][y1].entity = target
+        print(self.grid[x2][y2].entity, self.grid[x1][y1].entity)
+    
     #Resets all sound values to 0
     def clearNoises(self):
         for i in self.grid:
