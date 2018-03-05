@@ -8,6 +8,7 @@ class Tile(object):
         self.entity = entity
         self.color = color
         self.noise = 0
+        self.rep = [(0,0,2)]
 
     def clear_noise(self):
         self.noise = 0
@@ -16,6 +17,11 @@ class Tile(object):
         if self.entity == None:
             return '.'
         return self.entity.icon
+
+    def print_rep(self):
+        if self.entity == None:
+            return self.rep
+        return self.entity.rep
 
 # TO-DO: Add copy function
 

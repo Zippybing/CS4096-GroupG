@@ -1,5 +1,6 @@
 import GameState
 import Entities
+import visual
 import random
 import time
 
@@ -14,13 +15,14 @@ def main():
     game.world.placeEntity(10,3,Entities.Potion('P',0,10,3))
     game.world.placeEntity(12,5,Entities.Exit('E',0,12,5))
 
-    game.world.displayGrid()
+    
     while game.checkActive():
+        game.world.displayGrid()
     
         # Hero Turn
         actions = game.hero.speed
         while actions > 0 and game.checkActive():
-            userInput = input('Give input: ').upper()
+            userInput = visual.showmap(game)
             if userInput == '0':
                 # Hero Faces UP
                 x = 0

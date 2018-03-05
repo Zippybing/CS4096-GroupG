@@ -8,6 +8,7 @@ class WorldGrid:
         self.grid = None
         self.width = None
         self.height = None
+        self.vizgrid = None
         
     #Initialize a map filled with tiles.
     def createMap(self, x, y):
@@ -17,13 +18,19 @@ class WorldGrid:
         
     #Print to the console ASCII representation of map
     def displayGrid(self):
+        gridtext = [[],[]]
         for y in range(len(self.grid[0])):
+            rowtext = ""
+            colorrow =[]
             for x in range(len(self.grid)):
-                sys.stdout.write('['+self.grid[x][y].print_icon()+']')
-                #sys.stdout.write('['+str(issubclass(type(self.grid[x][y].entity),Entities.Entity))+']')
-            sys.stdout.write('\n')
+                #sys.stdout.write('['+self.grid[x][y].print_icon()+']')
+                rowtext += ' '+self.grid[x][y].print_icon()+' '
+                colorrow += self.grid[x][y].print_rep() + self.grid[x][y].print_rep() + self.grid[x][y].print_rep()
+            gridtext[0] += [str(rowtext)]
+            gridtext[1] += [colorrow]
             sys.stdout.flush()
-            
+            self.vizgrid = gridtext
+        return gridtext
     #Used by the map generator function to place entities in specific tile  
     def placeEntity(self, x, y, e):
         self.grid[x][y].entity = e

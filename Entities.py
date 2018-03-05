@@ -30,6 +30,7 @@ class Fixture(Entity):
 '''Sub-Entities of Creature'''
 class Hero(Creature):
     def __init__(self, icon, direction, x, y, speed, health, name, inventory = []):
+        self.rep = [(7,2,2)]
         Creature.__init__(self, icon, direction, x, y, speed, health, name)
         self.hasEscaped = False
         self.isAlive = True
@@ -37,6 +38,7 @@ class Hero(Creature):
 
 class Monster(Creature):
     def __init__(self, icon, direction, x, y, speed, health, name, drops = []):
+        self.rep = [(1,1,2)]
         Creature.__init__(self, icon, direction, x, y, speed, health, name)
         drops = []
 
@@ -63,16 +65,19 @@ class Door(Fixture):
 
 class Exit(Fixture):
     def __init__(self, icon, direction, x, y, state=None):
+        self.rep = [(5,4,2)]
         Fixture.__init__(self, icon, direction, x, y, state)
         
 '''Sub-Entities of Item'''
 class Key(Item):
     def __init__(self, icon, direction, x, y, door=1234):
+        self.rep = [(5,4,2)]
         Item.__init__(self, icon, direction, x, y)
         self.door = door
 
 class Potion(Item):
     def __init__(self, icon, direction, x, y, color='Red'):
+        self.rep = [(5,4,2)]
         Item.__init__(self, icon, direction, x, y)
         self.color = color
 
