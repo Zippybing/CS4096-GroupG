@@ -9,7 +9,7 @@ class GameState:
     def __init__(self):
         self.score = 0
         self.lives = 3
-        self.level = None #random seed for genration or actual name
+        self.level = "Jakes Fantasy Land" #random seed for genration or actual name
         self.world = WorldGrid.WorldGrid() #is a worldgrid object
         self.seed = None    #will have a random seed that is used to generate the worlds in a deterministic way
         self.hero = None
@@ -43,4 +43,16 @@ class GameState:
     
     def newworldgen(self,seed):
         self.seed = seed + None #None is a deterministic addition to seed to create next level from prevoius
+    def scoreDisplay(self):
+        tmp = []
+        livesrep = "LIVES: "+str(self.lives)
+        scorerep = "SCORE: "+str(self.score)
+        totalrep = '\n'+livesrep + "    " + scorerep
+        tmp += [('streak',totalrep)]
+        return tmp
+    def worldDisplay(self):
+        tmp =[]
+        Worldrep = str(self.level)
+        tmp += [('streak', Worldrep)]
+        return tmp
     
