@@ -9,7 +9,7 @@ class GameState:
     def __init__(self):
         self.score = 0
         self.lives = 3
-        self.level = None #random seed for genration or actual name
+        self.level = "Robbing The Three Little Bears Of Everything, Revengeance..." #random seed for genration or actual name
         self.world = WorldGrid.WorldGrid() #is a worldgrid object
         self.seed = None    #will have a random seed that is used to generate the worlds in a deterministic way
         self.hero = None
