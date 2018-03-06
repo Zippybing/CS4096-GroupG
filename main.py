@@ -44,7 +44,7 @@ def main():
                 game.world.tryMoveEntity(game.hero.x,game.hero.y,game.hero.x-1,game.hero.y)
                 actions -= 1
             elif userInput == 'S':
-                # Hero Moves DOWN
+                # Hero Moves DOWNss
                 game.world.tryMoveEntity(game.hero.x,game.hero.y,game.hero.x,game.hero.y+1)
                 actions -= 1
             elif userInput == 'D':
