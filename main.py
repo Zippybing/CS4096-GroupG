@@ -22,7 +22,7 @@ def main():
         # Hero Turn
         actions = game.hero.speed
         while actions > 0 and game.checkActive():
-            userInput = visual.showmap(game)
+            userInput = visual.showmaphero(game)
             if userInput == '0':
                 # Hero Faces UP
                 x = 0
@@ -61,7 +61,7 @@ def main():
         # Monster Turn
         actions = game.monster.speed
         while actions > 0 and game.checkActive():
-            rand = random.randint(0,3)
+            rand = visual.showmapmon(game)
             if rand == 0:
                 # Hero Moves UP
                 game.world.tryMoveEntity(game.monster.x,game.monster.y,game.monster.x,game.monster.y-1)
@@ -79,7 +79,7 @@ def main():
                 game.world.tryMoveEntity(game.monster.x,game.monster.y,game.monster.x+1,game.monster.y)
                 actions -= 1
             game.world.displayGrid()
-            time.sleep(.25)
+            
         # Noise Cleanup and other Cleanup
         
     if game.hero.hasEscaped:
