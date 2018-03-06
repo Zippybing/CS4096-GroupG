@@ -12,6 +12,8 @@ def main():
     game.world.placeEntity(1,2,game.hero)
     game.world.placeEntity(4,3,game.monster)
     game.world.placeEntity(3,4,Entities.Key('K',0,3,4))
+    game.world.placeEntity(5,5,Entities.Gem('G',0,5,5,100))
+    game.world.placeEntity(7,3,Entities.Shoes('S',0,7,3))
     game.world.placeEntity(10,3,Entities.Potion('P',0,10,3))
     game.world.placeEntity(12,5,Entities.Exit('E',0,12,5))
 
@@ -56,6 +58,7 @@ def main():
                 return
             game.world.displayGrid()
             print(game.hero.inventory)
+            print(game.score)
         # Item Turn
         
         # Monster Turn

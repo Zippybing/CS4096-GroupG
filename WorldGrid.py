@@ -37,9 +37,11 @@ class WorldGrid:
         
         
     #Used to move entities from one tile to another
+
     def tryMoveEntity(self, x1, y1, x2, y2):
         # MUY IMPORTANTE: issubclass(type(self.grid[x][y].entity),Entities.Entity)
         print(x1, y1, x2, y2)
+        score = 0
         # QUICK HACK: DON'T LET ENTITY MOVE ONTO ITSELF
         if x2 >= 0 and x2 < self.width and y2 >= 0 and y2 < self.height:
             if x1 == x2 and y1 == y2:
@@ -55,6 +57,8 @@ class WorldGrid:
                         if issubclass(type(target),Entities.Item):
                             print("Picked up item!")
                             # Add item to inventory
+                            agent.addToInventory(target)
+                            agent.printInventory()
                             # Move hero to space
                             agent.inventory.append(target)
                             self.moveEntity(x1, y1, x2, y2, agent, None)

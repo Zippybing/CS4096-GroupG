@@ -30,11 +30,18 @@ class Fixture(Entity):
 '''Sub-Entities of Creature'''
 class Hero(Creature):
     def __init__(self, icon, direction, x, y, speed, health, name, inventory = []):
-        self.rep = [(7,2,2)]
         Creature.__init__(self, icon, direction, x, y, speed, health, name)
+        self.rep = [(7,2,2)]       
         self.hasEscaped = False
         self.isAlive = True
         self.inventory = inventory
+        
+    def addToInventory(self, item):
+        self.inventory.append(item)
+
+    def printInventory(self):
+        for i in self.inventory:
+            print(i)
 
 class Monster(Creature):
     def __init__(self, icon, direction, x, y, speed, health, name, drops = []):
@@ -84,6 +91,23 @@ class Potion(Item):
 class Torch(Item):
     pass
 
+class Gem(Item):
+    def __init__(self, icon, direction, x, y, score):
+        Item.__init__(self, icon, direction, x, y)
+        self.score = score
+        self.rep = [(5,4,2)]
+
+class Rock(Item):
+    def __init__(self, icon, direction, x, y):
+        Item.__init__(self, icon, direction, x, y)
+        self.rep = [(5,4,2)]
+
+class Shoes(Item):
+    def __init__(self, icon, direction, x, y):
+        Item.__init__(self, icon, direction, x, y)
+        self.rep = [(5,4,2)]
+
+'''Sub-Entities of Fixture'''
 class Chest(Fixture):
     def __init__(self, icon, direction, x, y, state, locked, items = [], key=None):
         Item.__init__(self, icon, state, direction)
