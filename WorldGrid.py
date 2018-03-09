@@ -40,7 +40,7 @@ class WorldGrid:
 
     def tryMoveEntity(self, x1, y1, x2, y2):
         # MUY IMPORTANTE: issubclass(type(self.grid[x][y].entity),Entities.Entity)
-        print(x1, y1, x2, y2)
+        #print(x1, y1, x2, y2)
         score = 0
         # QUICK HACK: DON'T LET ENTITY MOVE ONTO ITSELF
         if x2 >= 0 and x2 < self.width and y2 >= 0 and y2 < self.height:
@@ -91,7 +91,7 @@ class WorldGrid:
             target.y = y1
         self.grid[x2][y2].entity = agent
         self.grid[x1][y1].entity = target
-        print(self.grid[x2][y2].entity, self.grid[x1][y1].entity)
+        #print(self.grid[x2][y2].entity, self.grid[x1][y1].entity)
     
     #Resets all sound values to 0
     def clearNoises(self):

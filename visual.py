@@ -98,7 +98,7 @@ def showmapmon(game):
                         bg=randint(0, screen.colours - 1))
             screen.refresh()
             userInput = randint(0,3)
-            time.sleep(1)
+            time.sleep(.25)
             return userInput
             #userInput = input('Give input: ').upper()
         screen.close(restore=False)
