@@ -47,9 +47,10 @@ def showmaphero(game):
                         bg=randint(0, screen.colours - 1))
             screen.refresh()
             userInput = input().upper()
+            screen.close(restore=False)
             return userInput
             #userInput = input('Give input: ').upper()
-        screen.close(restore=False)
+        
 
 
             
@@ -99,9 +100,10 @@ def showmapmon(game):
             screen.refresh()
             userInput = randint(0,3)
             time.sleep(1)
+            screen.close(restore=False)
             return userInput
             #userInput = input('Give input: ').upper()
-        screen.close(restore=False)
+        
 
 
             
