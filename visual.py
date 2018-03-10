@@ -48,7 +48,7 @@ def showmaphero(game, screen):
         screen.refresh()
         
         actions += Turns.heroTurn(game)
-        
+    screen.refresh()
     
 
         #userInput = input('Give input: ').upper()
@@ -95,6 +95,7 @@ def showmapmon(game, screen):
         screen.refresh()
         
         actions += Turns.monsterTurn(game)
-        time.sleep(.25)
 
+        time.sleep(.25)
+    screen.refresh()
 

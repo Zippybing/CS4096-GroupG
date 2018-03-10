@@ -3,6 +3,11 @@ import sys
 import Tile
 import Entities
 
+import time
+import winsound
+frequency = 1200
+duration = 250
+
 class WorldGrid:
     def __init__(self):
         self.grid = None
@@ -25,6 +30,8 @@ class WorldGrid:
             for x in range(len(self.grid)):
                 #sys.stdout.write('['+self.grid[x][y].print_icon()+']')
                 rowtext += ' '+self.grid[x][y].print_icon()+' '
+                #Noise Visualizer
+                #rowtext += ' '+str(self.grid[x][y].noise)+' '
                 colorrow += self.grid[x][y].print_rep() + self.grid[x][y].print_rep() + self.grid[x][y].print_rep()
             gridtext[0] += [str(rowtext)]
             gridtext[1] += [colorrow]
@@ -71,8 +78,13 @@ class WorldGrid:
                             return
                         elif type(target) == Entities.Exit:
                             print("YOU Won")
+                            #winsound.Beep(frequency, duration)
                             agent.hasEscaped = True
+                            #winsound.Beep(frequency, duration)
+                            #agent.isAlive = False
                             self.placeEntity(x1,y1,None)
+                            #winsound.Beep(frequency, duration)
+                            #time.sleep(.25)
                             return
                     #Monster
                     elif type(agent) == Entities.Monster:

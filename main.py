@@ -6,6 +6,11 @@ import time
 import Turns as turns
 from asciimatics.screen import *
 
+import winsound
+frequency = 1500
+duration = 250
+
+
 def main():
     game = GameState.GameState()
     game.world.createMap(20,8)
@@ -23,6 +28,7 @@ def main():
     screen = Screen.open()
     
     while game.checkActive():
+        winsound.Beep(frequency, duration)
         game.world.displayGrid()
     
         #Hero Turn
@@ -32,7 +38,9 @@ def main():
         # Monster Turn
         visual.showmapmon(game, screen)
         # Noise Cleanup and other Cleanup
-
+        game.world.clearNoises()
+        
+    winsound.Beep(frequency, duration)
     screen.close(restore=False) 
     
     if game.hero.hasEscaped:
