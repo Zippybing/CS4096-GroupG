@@ -3,11 +3,6 @@ import sys
 import Tile
 import Entities
 
-import time
-import winsound
-frequency = 1200
-duration = 250
-
 class WorldGrid:
     def __init__(self):
         self.grid = None
@@ -77,14 +72,9 @@ class WorldGrid:
                             self.placeEntity(x1,y1,None)
                             return
                         elif type(target) == Entities.Exit:
-                            print("YOU Won")
-                            #winsound.Beep(frequency, duration)
+                            print("YOU WON")
                             agent.hasEscaped = True
-                            #winsound.Beep(frequency, duration)
-                            #agent.isAlive = False
                             self.placeEntity(x1,y1,None)
-                            #winsound.Beep(frequency, duration)
-                            #time.sleep(.25)
                             return
                     #Monster
                     elif type(agent) == Entities.Monster:

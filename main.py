@@ -6,13 +6,16 @@ import time
 import Turns as turns
 from asciimatics.screen import *
 
+'''
 import winsound
 frequency = 1500
+frequency2 = 2000
 duration = 250
-
+'''
 
 def main():
     game = GameState.GameState()
+    
     game.world.createMap(20,8)
     game.hero = Entities.Hero('H',0,1,2,4,88,'Steve')
     game.monster = Entities.Monster('M',4,3,5,88,'Fred')
@@ -27,8 +30,9 @@ def main():
     
     screen = Screen.open()
     
+    winsound.Beep(frequency, duration)
+    
     while game.checkActive():
-        winsound.Beep(frequency, duration)
         game.world.displayGrid()
     
         #Hero Turn
@@ -39,9 +43,19 @@ def main():
         visual.showmapmon(game, screen)
         # Noise Cleanup and other Cleanup
         game.world.clearNoises()
-        
+   
+    #Cool Jingle for Windows users
+    '''
     winsound.Beep(frequency, duration)
-    screen.close(restore=False) 
+    winsound.Beep(frequency2, duration)
+    winsound.Beep(frequency, duration)
+    winsound.Beep(frequency2, duration)
+    winsound.Beep(frequency2, duration)
+    '''
+    
+    screen.close(restore=True)
+
+    #i = 1/0
     
     if game.hero.hasEscaped:
         print("Congratulations, you won!")
