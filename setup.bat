@@ -8,7 +8,6 @@ echo This Computer does not have Python. Please install Python to Continue
 
 :HASPYTHON
 echo This Computer has Python. Proceeding with Setup
-pip install pyinstaller
-pyinstaller main.py
+pip install asciimatics
 
 pause
