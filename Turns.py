@@ -3,7 +3,10 @@ from random import randint
 
 def heroTurn(game, key):
     actions = 0
-    userInput = key.upper()
+
+    # Receive either a string representation of user keypress, or empty string
+    userInput = key
+
     if userInput == '0':
         # Hero Faces UP
         x = 0
