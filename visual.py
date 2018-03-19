@@ -9,14 +9,16 @@ tmp = "YES\nYES\nYES"
 def showmaphero(game, screen):
     scoreboard = "Score: "+str(game.score) + "           " + "Lives: "+str(game.lives)
     counter = 0
+    old_key = "None"
     #input('Give input: ').upper()
 
     actions = game.hero.speed
     while actions > 0 and game.checkActive():
         linecounter = 0
         colortracker = 0
-        #for row in mastergrid: 
-        #print(row)
+
+        keypress = screen.get_event()
+
         screen.print_at(game.level,
                    int(screen.width/2) - int(len(game.level)/2), (int(screen.height/2)+linecounter-6),
                     colour=randint(0, screen.colours - 1),
@@ -47,7 +49,8 @@ def showmaphero(game, screen):
                     bg=randint(0, screen.colours - 1))
         screen.refresh()
         
-        actions += Turns.heroTurn(game)
+        if keypress and keypress.key_code:
+            actions += Turns.heroTurn(game, chr(keypress.key_code))
     screen.refresh()
     
 
@@ -63,7 +66,6 @@ def showmapmon(game, screen):
         linecounter = 0
         colortracker = 0
         #for row in mastergrid: 
-        #print(row)
         screen.print_at(game.level,
                 int(screen.width/2) - int(len(game.level)/2), (int(screen.height/2)+linecounter-6),
                     colour=randint(0, screen.colours - 1),

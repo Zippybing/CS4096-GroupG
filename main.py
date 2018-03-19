@@ -30,7 +30,7 @@ def main():
     
     screen = Screen.open()
     
-    winsound.Beep(frequency, duration)
+    #winsound.Beep(frequency, duration)
     
     while game.checkActive():
         game.world.displayGrid()

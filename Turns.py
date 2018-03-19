@@ -1,9 +1,9 @@
 #Turns
 from random import randint
 
-def heroTurn(game):
+def heroTurn(game, key):
     actions = 0
-    userInput = input().upper()
+    userInput = key.upper()
     if userInput == '0':
         # Hero Faces UP
         x = 0
@@ -42,8 +42,6 @@ def heroTurn(game):
         return -808080808
     game.world.displayGrid()
     return actions
-    #print(game.hero.inventory)
-    #print(game.score)
     
     
 def monsterTurn(game):
