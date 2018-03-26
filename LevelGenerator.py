@@ -6,10 +6,6 @@
 import sys
 import random
 
-# Create a normal grid, but reverse grid height and width
-grid_height = 24
-grid_width = 48
-grid = [[0 for i in range(grid_height)] for j in range(grid_width)]
 # Seed random
 random.seed()
 
@@ -17,7 +13,29 @@ random.seed()
 # is actually put into grid as [y=0][x=2], but print_grid displays as [x=0][y=2]
 # grid[0][2] = 1
 
-def print_grid():
+def create_level(grid_width, grid_height):
+	# Create a blank grid to give back to the WorldGrid createMap function
+	grid = [[0 for i in range(grid_height)] for j in range(grid_width)]
+
+	# Initialize the grid by randomly filling it with wall tiles
+	# The first parameter is the % chance that a random cell becomes a tile
+	# recommended chance %: 35-39
+	initialize_grid(37, grid, grid_width, grid_height)
+
+	# Run the simulation steps
+	for i in range(7):
+		do_simulation_step(4, 3, grid, grid_width, grid_height)
+
+	# Fill the grid's edges with walls to prevent player exiting map's sides
+	fill_grid_walls(grid, grid_width, grid_height)
+
+	# Print the grid, for debug purposes
+	#print_grid(grid, grid_width, grid_height)
+
+	# Give the grid back to whatever called this function
+	return grid
+
+def print_grid(grid, grid_width, grid_height):
 	# Normal printing of the grid
 	# for y in range(grid_width):
 	#		for x in range(grid_height):
@@ -41,13 +59,13 @@ def print_numerical_grid(g):
 		sys.stdout.write('\n')
 		sys.stdout.flush()
 
-def initialize_grid(chance):
+def initialize_grid(chance, grid, grid_width, grid_height):
 	for y in range(grid_height):
 		for x in range(grid_width):
 			if random.randrange(100) < chance:
 				grid[x][y] = 1
 
-def count_alive_neighbors():
+def count_alive_neighbors(grid, grid_width, grid_height):
 	# Create new grid
 	grid_count = [[0 for i in range(grid_height)] for j in range(grid_width)]
 	# Iterate through grid
@@ -77,8 +95,8 @@ def count_alive_neighbors():
 	#print_numerical_grid(grid_count)
 	return grid_count
 
-def do_simulation_step(birth_limit, death_limit):
-	grid_count = count_alive_neighbors()
+def do_simulation_step(birth_limit, death_limit, grid, grid_width, grid_height):
+	grid_count = count_alive_neighbors(grid, grid_width, grid_height)
 	# Iterate through grid
 	for y in range(grid_height):
 		for x in range(grid_width):
@@ -93,21 +111,10 @@ def do_simulation_step(birth_limit, death_limit):
 				if grid_count[x][y] > birth_limit:
 					grid[x][y] = 1
 
-def fill_grid_walls():
+def fill_grid_walls(grid, grid_width, grid_height):
 	for x in range(grid_width):
 		grid[x][0] = 1
 		grid[x][grid_height - 1] = 1
 	for y in range(grid_height):
 		grid[0][y] = 1
 		grid[grid_width - 1][y] = 1
-
-# Main loop
-initialize_grid(37) # Standard is 40
-#print_grid()
-for i in range(7):
-	#print('-------------------------------')
-	do_simulation_step(4, 3)
-	#print_grid()
-fill_grid_walls()
-print_grid()
-

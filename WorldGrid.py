@@ -1,7 +1,7 @@
-#import Tile
 import sys
 import Tile
 import Entities
+from LevelGenerator import create_level
 
 class WorldGrid:
     def __init__(self):
@@ -33,8 +33,14 @@ class WorldGrid:
             sys.stdout.flush()
             self.vizgrid = gridtext
         return gridtext
-    #Used by the map generator function to place entities in specific tile  
+
+    #Used by the map generator function to place entities in specific tile
+    # Now overrides the entity's location attributes w/ where it is placed
     def placeEntity(self, x, y, e):
+        # Override the entity's location attributes w/ placement coordinates
+        if e is not None:
+            e.x = x
+            e.y = y
         self.grid[x][y].entity = e
         
         
