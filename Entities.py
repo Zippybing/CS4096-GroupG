@@ -130,3 +130,9 @@ class Chest(Fixture):
 
 class Trap(Fixture):
     pass
+
+class Wall(Fixture):
+    def __init__(self):
+        Fixture.__init__(self, state="Wall?")
+        self.icon = '#'
+        self.rep = [(5,1,2)]

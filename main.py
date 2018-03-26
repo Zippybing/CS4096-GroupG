@@ -16,7 +16,7 @@ duration = 250
 def main():
     game = GameState.GameState()
     
-    game.world.createMap(20,8)
+    game.world.createMap(24,24)
     game.hero = Entities.Hero(0,4,88,'Steve')
     game.monster = Entities.Monster(5,88,'Fred')
     game.world.placeEntity(1,2,game.hero)

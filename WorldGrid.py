@@ -15,6 +15,13 @@ class WorldGrid:
         self.grid = [ [Tile.Tile('White') for _ in range(y)] for _ in range(x)]
         self.width = x
         self.height = y
+        # Create a base from LevelGenerator
+        base = create_level(x, y)
+        # Fill the game grid with entities corresponding to entries in the base
+        for i in range(len(base[0])):
+            for j in range(len(base)):
+                if base[i][j] == 1:
+                    self.placeEntity(i, j, Entities.Wall())
         
     #Print to the console ASCII representation of map
     def displayGrid(self):
@@ -63,7 +70,7 @@ class WorldGrid:
                     #Hero
                     if type(agent) == Entities.Hero:
                         if issubclass(type(target),Entities.Item):
-                            print("Picked up item!")
+                            # print("Picked up item!") # Temporarily removed. Causes problems w/ Mac.
                             # Add item to inventory
                             agent.addToInventory(target)
                             # agent.printInventory() # BREAKS SCREEN RENDERING LOOP
