@@ -60,7 +60,7 @@ class WorldGrid:
                             print("Picked up item!")
                             # Add item to inventory
                             agent.addToInventory(target)
-                            agent.printInventory()
+                            # agent.printInventory() # BREAKS SCREEN RENDERING LOOP
                             # Move hero to space
                             agent.inventory.append(target)
                             self.moveEntity(x1, y1, x2, y2, agent, None)
