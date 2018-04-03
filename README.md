@@ -1,6 +1,6 @@
 # CS4096-GroupG
 
-# Cavern Souls: A rogue-like dungeon crawler
+## Cavern Souls: A rogue-like dungeon crawler
 
 Dependencies:
   * Python
@@ -9,8 +9,9 @@ Dependencies:
       provided setup scripts
 
 To Run:
-  * Type "pythonX (where x is either 2 or 3) main.py" into the command
-    line
+  * '''python
+      python3 main.py
+    '''
 
 # Controls:
   * W: up
