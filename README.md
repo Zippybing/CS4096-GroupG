@@ -9,10 +9,11 @@ Dependencies:
       provided setup scripts
 
 To Run:
-  * Type
+  Type
 ```python
       python3 main.py
 ```
+into the command line.
 
 # Controls:
   * W: up
