@@ -9,9 +9,10 @@ Dependencies:
       provided setup scripts
 
 To Run:
-  * '''python
+  * Type
+```python
       python3 main.py
-    '''
+```
 
 # Controls:
   * W: up
