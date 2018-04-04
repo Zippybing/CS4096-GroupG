@@ -4,6 +4,8 @@
 #Description: The Game State for the rogue-like stealth game
 
 import WorldGrid
+import Entities
+import random
 
 class GameState:
     def __init__(self):
@@ -12,26 +14,38 @@ class GameState:
         self.level = "Robbing The Three Little Bears Of Everything, Revengeance..." #random seed for genration or actual name
         self.world = WorldGrid.WorldGrid() #is a worldgrid object
         self.seed = None    #will have a random seed that is used to generate the worlds in a deterministic way
-        self.hero = None
-        self.monster = None
+        self.hero = Entities.Hero(0,4,'DEFAULT_HERO')
+        self.monster = Entities.Monster(5,'DEFAULT_MONSTER')
     
 
     def checkActive(self):
         return self.hero.isAlive and not self.hero.hasEscaped
-    
-    #delete this??
-    def scoreinc(self, value):
-        self.score += value
-    
-    def scoredec(self,value):
-        self.score -= value 
+        
+    def populate(self):
+        self.hero.hasEscaped = False
+        
+        self.world.placeEntity(4,5,Entities.Exit())
+        self.world.placeEntity(5,4,self.hero)
+        self.world.placeEntity(4,3,self.monster)
+        
+        self.world.placeEntity(3,4,Entities.Key())
+        self.world.placeEntity(5,5,Entities.Gem(100))
+        self.world.placeEntity(7,3,Entities.Shoes())
+        self.world.placeEntity(10,3,Entities.Potion())
 
-    def livesinc(self,value):
-        self.lives += value
-
-    def livesdec(self,value):
-        self.lives -= value
-
+    #Pathfinding
+    """
+        ???
+    def dfs(self, xI, yI, visited = None):
+        if visited is None:
+            visited = set()
+        visited.add((xI,yI))
+        next = goodTiles(xI, yI)
+        
+    def goodTiles(self, x, y):
+        ???
+    """
+       
     def levelnamegen(self):
         self.level = None   #a dict of level names or randomly generated ones
 

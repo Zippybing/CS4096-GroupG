@@ -85,7 +85,7 @@ class WorldGrid:
                             self.placeEntity(x1,y1,None)
                             return
                         elif type(target) == Entities.Exit:
-                            print("YOU WON")
+                            print("YOU ESCAPED THE LEVEL")
                             agent.hasEscaped = True
                             self.placeEntity(x1,y1,None)
                             return

@@ -5,10 +5,9 @@ class Entity(object):
 
 '''Sub-Entities of Entity'''
 class Creature(Entity):
-    def __init__(self, speed, health, name):
+    def __init__(self, speed, name):
         Entity.__init__(self)
         self.speed = speed
-        self.health = health
         self.name = name
 
 class Item(Entity):
@@ -23,8 +22,8 @@ class Fixture(Entity):
 
 '''Sub-Entities of Creature'''
 class Hero(Creature):
-    def __init__(self, direction, speed, health, name, inventory = []):
-        Creature.__init__(self, speed, health, name)
+    def __init__(self, direction, speed, name, inventory = []):
+        Creature.__init__(self, speed, name)
         self.icon = 'H'
         self.rep = [(7,2,2)]       
         self.hasEscaped = False
@@ -39,10 +38,10 @@ class Hero(Creature):
             print(i)
 
 class Monster(Creature):
-    def __init__(self, speed, health, name, drops = []):
+    def __init__(self, speed, name, drops = []):
         self.icon = 'M'
         self.rep = [(1,1,2)]
-        Creature.__init__(self, speed, health, name)
+        Creature.__init__(self, speed, name)
         drops = []
 
     def addDrop(self, drops):
