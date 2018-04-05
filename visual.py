@@ -18,10 +18,12 @@ def showmaphero(game, screen):
 
         user_keypress = get_keypress_from_screen(screen)
 
+        # Title bar
         screen.print_at(game.level,
-                   int(screen.width/2) - int(len(game.level)/2), (int(screen.height/2)+linecounter-6),
+                   int(screen.width/2) - int(len(game.level)/2), 1,
                     colour=randint(0, screen.colours - 1),
                     bg=randint(0, screen.colours - 1))
+        # Map grid
         for row in game.world.vizgrid[0]:
             # screen.print_at(row,
             #                 0, counter,
@@ -29,7 +31,7 @@ def showmaphero(game, screen):
             #                 bg=randint(0, screen.colours - 1))
 
             screen.paint(row,
-                        int(screen.width/2)-int(game.world.width*3/2),(int(screen.height/2)+linecounter-4),
+                        int(screen.width/2)-int(game.world.width*3/2),(int(screen.height/4)+linecounter-4),
                         7,2,0,
                         colour_map=game.world.vizgrid[1][colortracker])
 
@@ -37,15 +39,12 @@ def showmaphero(game, screen):
             colortracker+=1
             #ev = screen.get_key()
         
-        #screen.refresh()
+        # Scoreboard
         screen.print_at(scoreboard,
-                   int(screen.width/2) - int(len(scoreboard)/2), (int(screen.height/2)+6),
+                   int(screen.width/2) - int(len(scoreboard)/2), (int(screen.height)-1),
                     colour=randint(0, screen.colours - 1),
                     bg=randint(0, screen.colours - 1))
-        screen.print_at('Input: ',
-                    0, screen.height-1,
-                    colour=randint(0, screen.colours - 1),
-                    bg=randint(0, screen.colours - 1))
+        # User keypress display -- DEBUGGING PURPOSES ONLY
         screen.print_at(user_keypress, 0, 0) # prints out user keyboard input
         screen.refresh()
         
@@ -65,11 +64,13 @@ def showmapmon(game, screen):
     while actions > 0 and game.checkActive():
         linecounter = 0
         colortracker = 0
-        #for row in mastergrid: 
+        #for row in mastergrid:
+        # Title bar
         screen.print_at(game.level,
-                int(screen.width/2) - int(len(game.level)/2), (int(screen.height/2)+linecounter-6),
+                int(screen.width/2) - int(len(game.level)/2), 1,
                     colour=randint(0, screen.colours - 1),
                     bg=randint(0, screen.colours - 1))
+        # Map grid
         for row in game.world.vizgrid[0]:
             # screen.print_at(row,
             #                 0, counter,
@@ -77,7 +78,7 @@ def showmapmon(game, screen):
             #                 bg=randint(0, screen.colours - 1))
 
             screen.paint(row,
-                        int(screen.width/2)-int(game.world.width*3/2),(int(screen.height/2)+linecounter-4),
+                        int(screen.width/2)-int(game.world.width*3/2),(int(screen.height/4)+linecounter-4),
                         7,2,0,
                         colour_map=game.world.vizgrid[1][colortracker])
 
@@ -85,13 +86,9 @@ def showmapmon(game, screen):
             colortracker+=1
             #ev = screen.get_key()
         
-        #screen.refresh()
+        # Scoreboard
         screen.print_at(scoreboard,
-                int(screen.width/2) - int(len(scoreboard)/2), (int(screen.height/2)+6),
-                    colour=randint(0, screen.colours - 1),
-                    bg=randint(0, screen.colours - 1))
-        screen.print_at('Input: ',
-                    0, screen.height-1,
+                int(screen.width/2) - int(len(scoreboard)/2), (int(screen.height)-1),
                     colour=randint(0, screen.colours - 1),
                     bg=randint(0, screen.colours - 1))
         screen.refresh()
