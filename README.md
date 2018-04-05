@@ -1,7 +1,11 @@
 # CS4096-GroupG
 
-# Cavern Souls: A rogue-like dungeon crawler
-
+## Cavern Souls: A rogue-like dungeon crawler
+   Escape this seemingly endless dungeon whilst evading the blind monster lurking within.
+   Careful, for what she lacks in sight she makes up in enhanced hearing. Move silently hero and
+   escape while you can!
+   
+   
 Dependencies:
   * Python
   * Asciimatics
@@ -9,8 +13,11 @@ Dependencies:
       provided setup scripts
 
 To Run:
-  * Type "pythonX (where x is either 2 or 3) main.py" into the command
-    line
+  Type
+```python
+      python3 main.py
+```
+into the command line.
 
 # Controls:
   * W: up
