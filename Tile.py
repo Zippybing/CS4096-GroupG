@@ -20,7 +20,7 @@ class Tile(object):
 
     def print_rep(self):
         if self.entity == None:
-            return self.rep
+            return self.rep 
         return self.entity.rep
 
 # TO-DO: Add copy function

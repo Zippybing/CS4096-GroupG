@@ -4,11 +4,12 @@ import Entities
 from LevelGenerator import create_level
 
 class WorldGrid:
-    def __init__(self):
+    def __init__(self,game):
         self.grid = None
         self.width = None
         self.height = None
         self.vizgrid = None
+        self.gamestate = game
         
     #Initialize a map filled with tiles.
     def createMap(self, x, y):
@@ -87,6 +88,7 @@ class WorldGrid:
                         elif type(target) == Entities.Exit:
                             print("YOU ESCAPED THE LEVEL")
                             agent.hasEscaped = True
+                            self.gamestate.score +=100*self.gamestate.floor
                             self.placeEntity(x1,y1,None)
                             return
                     #Monster
