@@ -8,7 +8,7 @@ from asciimatics.screen import *
 
 def main():
     game = GameState.GameState()
-    debug = True
+    debug = False
     while game.hero.isAlive:
         game.floor += 1
         game.world.createMap(24,24)
