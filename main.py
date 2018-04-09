@@ -18,7 +18,7 @@ def main():
         screen = Screen.open()
 
         while game.checkActive():
-            game.world.displayGrid()
+            game.world.displayGridH()
         
             #Hero Turn
             visual.showmaphero(game, screen)

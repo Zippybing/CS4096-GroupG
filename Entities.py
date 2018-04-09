@@ -49,28 +49,7 @@ class Monster(Creature):
             self.drops.append(d)
 
             
-'''Sub-Entities of Fixtures'''
-class Door(Fixture):
-    def __init__(self, state, locked, key=None):
-        Fixture.__init__(self, state)
-        self.icon = 'D'
-        self.locked = locked
-        self.key = key
 
-    def unlockDoor(self):
-        self.locked = False
-
-    def openDoor(self):
-        self.state = 'Open'
-
-    def closeDoor(self):
-        self.state = 'Closed'
-
-class Exit(Fixture):
-    def __init__(self, state=None):
-        self.icon = 'E'
-        self.rep = [(5,4,2)]
-        Fixture.__init__(self, state)
         
 '''Sub-Entities of Item'''
 class Key(Item):
@@ -110,6 +89,29 @@ class Shoes(Item):
         self.rep = [(5,4,2)]
 
 '''Sub-Entities of Fixture'''
+
+class Door(Fixture):
+    def __init__(self, state, locked, key=None):
+        Fixture.__init__(self, state)
+        self.icon = 'D'
+        self.locked = locked
+        self.key = key
+
+    def unlockDoor(self):
+        self.locked = False
+
+    def openDoor(self):
+        self.state = 'Open'
+
+    def closeDoor(self):
+        self.state = 'Closed'
+
+class Exit(Fixture):
+    def __init__(self, state=None):
+        self.icon = 'E'
+        self.rep = [(5,4,2)]
+        Fixture.__init__(self, state)
+
 class Chest(Fixture):
     def __init__(self, state, locked, items = [], key=None):
         self.icon = 'C'

@@ -43,7 +43,7 @@ def heroTurn(game, key):
         # Bad input!
         game.hero.isAlive = False
         return -808080808
-    game.world.displayGrid()
+    game.world.displayGridH()
     return actions
     
     
@@ -66,6 +66,6 @@ def monsterTurn(game):
         # Hero Moves RIGHT
         game.world.tryMoveEntity(game.monster.x,game.monster.y,game.monster.x+1,game.monster.y)
         actions -= 1
-    game.world.displayGrid()
+    game.world.displayGridM()
     return actions
         
