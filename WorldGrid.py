@@ -24,6 +24,26 @@ class WorldGrid:
                 if base[i][j] == 1:
                     self.placeEntity(i, j, Entities.Wall())
         
+
+    def displayGridnorm(self):
+        gridtext = [[],[]]
+        for y in range(len(self.grid[0])):
+            rowtext = ""
+            colorrow =[]
+            for x in range(len(self.grid)):
+                
+                rowtext += ' '+self.grid[x][y].print_icon()+' '
+                #Noise Visualizer
+                #rowtext += ' '+str(self.grid[x][y].noise)+' '
+                colorrow += self.grid[x][y].print_rep() + self.grid[x][y].print_rep() + self.grid[x][y].print_rep()
+                
+            gridtext[0] += [str(rowtext)]
+            gridtext[1] += [colorrow]
+            sys.stdout.flush()
+            self.vizgrid = gridtext
+        return gridtext   
+
+
     #Print to the console ASCII representation of map
     def displayGridH(self):
         gridtext = [[],[]]

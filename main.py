@@ -8,7 +8,7 @@ from asciimatics.screen import *
 
 def main():
     game = GameState.GameState()
-        
+    debug = True
     while game.hero.isAlive:
         game.floor += 1
         game.world.createMap(24,24)
@@ -18,14 +18,17 @@ def main():
         screen = Screen.open()
 
         while game.checkActive():
-            game.world.displayGridH()
+            if debug:
+                game.world.displayGridnorm()
+            else:
+                game.world.displayGridH()
         
             #Hero Turn
-            visual.showmaphero(game, screen)
+            visual.showmaphero(game, screen,debug)
             # Item Turn
             
             # Monster Turn
-            visual.showmapmon(game, screen)
+            visual.showmapmon(game, screen,debug)
             # Noise Cleanup and other Cleanup
             game.world.clearNoises()
        
