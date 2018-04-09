@@ -6,13 +6,18 @@ import time
 import Turns as turns
 from asciimatics.screen import *
 
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
 def main():
     game = GameState.GameState()
         
     while game.hero.isAlive:
         game.world.createMap(24,24)
         game.populate()
-
+        
         screen = Screen.open()
 
         while game.checkActive():
@@ -35,3 +40,4 @@ def main():
         print("Damn, you suck!")
 if __name__ == '__main__':
     main()
+    
