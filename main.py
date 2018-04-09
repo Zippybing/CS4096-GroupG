@@ -10,13 +10,15 @@ def main():
     game = GameState.GameState()
         
     while game.hero.isAlive:
+        game.floor += 1
         game.world.createMap(24,24)
         game.populate()
-
+        game.changecolorpalette()
+        None
         screen = Screen.open()
 
         while game.checkActive():
-            game.world.displayGrid()
+            game.world.displayGridH()
         
             #Hero Turn
             visual.showmaphero(game, screen)
