@@ -1,40 +1,92 @@
-#import Tile
 import sys
 import Tile
 import Entities
+from LevelGenerator import create_level
 
 class WorldGrid:
-    def __init__(self):
+    def __init__(self,game):
         self.grid = None
         self.width = None
         self.height = None
         self.vizgrid = None
+        self.gamestate = game
         
     #Initialize a map filled with tiles.
     def createMap(self, x, y):
         self.grid = [ [Tile.Tile('White') for _ in range(y)] for _ in range(x)]
         self.width = x
         self.height = y
+        # Create a base from LevelGenerator
+        base = create_level(x, y)
+        # Fill the game grid with entities corresponding to entries in the base
+        for i in range(len(base[0])):
+            for j in range(len(base)):
+                if base[i][j] == 1:
+                    self.placeEntity(i, j, Entities.Wall())
         
     #Print to the console ASCII representation of map
-    def displayGrid(self):
+    def displayGridH(self):
+        gridtext = [[],[]]
+        for y in range(len(self.grid[0])):
+            rowtext = ""
+            colorrow =[]
+            for x in range(len(self.grid)):
+                if  (x < self.gamestate.hero.x + 4 and x > self.gamestate.hero.x - 4 and y < self.gamestate.hero.y + 2 
+                and y > self.gamestate.hero.y - 2) or (x < self.gamestate.hero.x + 3 and x > self.gamestate.hero.x - 3 
+                and y < self.gamestate.hero.y + 3 and y > self.gamestate.hero.y - 3) or (y < self.gamestate.hero.y + 4 
+                and y > self.gamestate.hero.y - 4 and x < self.gamestate.hero.x + 2 and x > self.gamestate.hero.x - 2):
+                    #sys.stdout.write('['+self.grid[x][y].print_icon()+']')
+                    rowtext += ' '+self.grid[x][y].print_icon()+' '
+                    #Noise Visualizer
+                    #rowtext += ' '+str(self.grid[x][y].noise)+' '
+                    colorrow += self.grid[x][y].print_rep() + self.grid[x][y].print_rep() + self.grid[x][y].print_rep()
+                else :
+        		    #sys.stdout.write('['+self.grid[x][y].print_icon()+']')
+                    rowtext += '   '
+                    #Noise Visualizer
+                    #rowtext += ' '+str(self.grid[x][y].noise)+' '
+                    colorrow += [(0,0,0)] + [(0,0,0)] + [(0,0,0)]
+            gridtext[0] += [str(rowtext)]
+            gridtext[1] += [colorrow]
+            sys.stdout.flush()
+            self.vizgrid = gridtext
+        return gridtext
+
+
+    def displayGridM(self):
         gridtext = [[],[]]
         for y in range(len(self.grid[0])):
             rowtext = ""
             colorrow =[]
             for x in range(len(self.grid)):
                 #sys.stdout.write('['+self.grid[x][y].print_icon()+']')
-                rowtext += ' '+self.grid[x][y].print_icon()+' '
+                if( not isinstance(self.grid[x][y].entity,(Entities.Wall,Entities.Monster)) ):
+                    rowtext += ' '+str(self.grid[x][y].noise)+' '
+                    noiserep = self.grid[x][y].print_rep()
+                    noiserep = [(3,noiserep[0][1],0)]
+                else:
+                    rowtext += ' '+self.grid[x][y].print_icon()+' '
+                    noiserep = self.grid[x][y].print_rep()
+                    noiserep = [(noiserep[0][0],noiserep[0][1],0)]
+                colorrow += noiserep + noiserep + noiserep
+                #sys.stdout.write('['+self.grid[x][y].print_icon()+']')
+                
                 #Noise Visualizer
                 #rowtext += ' '+str(self.grid[x][y].noise)+' '
-                colorrow += self.grid[x][y].print_rep() + self.grid[x][y].print_rep() + self.grid[x][y].print_rep()
+                
             gridtext[0] += [str(rowtext)]
             gridtext[1] += [colorrow]
             sys.stdout.flush()
             self.vizgrid = gridtext
         return gridtext
-    #Used by the map generator function to place entities in specific tile  
+
+    #Used by the map generator function to place entities in specific tile
+    # Now overrides the entity's location attributes w/ where it is placed
     def placeEntity(self, x, y, e):
+        # Override the entity's location attributes w/ placement coordinates
+        if e is not None:
+            e.x = x
+            e.y = y
         self.grid[x][y].entity = e
         
         
@@ -57,10 +109,10 @@ class WorldGrid:
                     #Hero
                     if type(agent) == Entities.Hero:
                         if issubclass(type(target),Entities.Item):
-                            print("Picked up item!")
+                            # print("Picked up item!") # Temporarily removed. Causes problems w/ Mac.
                             # Add item to inventory
                             agent.addToInventory(target)
-                            agent.printInventory()
+                            # agent.printInventory() # BREAKS SCREEN RENDERING LOOP
                             # Move hero to space
                             agent.inventory.append(target)
                             self.moveEntity(x1, y1, x2, y2, agent, None)
@@ -72,8 +124,9 @@ class WorldGrid:
                             self.placeEntity(x1,y1,None)
                             return
                         elif type(target) == Entities.Exit:
-                            print("YOU WON")
+                            print("YOU ESCAPED THE LEVEL")
                             agent.hasEscaped = True
+                            self.gamestate.score +=100*self.gamestate.floor
                             self.placeEntity(x1,y1,None)
                             return
                     #Monster
@@ -103,7 +156,7 @@ class WorldGrid:
     
     #Propagates sound values from tile evenly
     def distributeNoise(self, x, y, noise):
-        if noise == 0 or x<0 or y<0 or x>len(self.grid)-1 or y>len(self.grid[0])-1:
+        if (noise == 0 or x<0 or y<0 or x>len(self.grid)-1 or y>len(self.grid[0])-1) or (isinstance(self.grid[x][y].entity,Entities.Wall)):
             return
         else:
             if self.grid[x][y].noise < noise:

@@ -1,9 +1,12 @@
 #Turns
 from random import randint
 
-def heroTurn(game):
+def heroTurn(game, key):
     actions = 0
-    userInput = input().upper()
+
+    # Receive either a string representation of user keypress, or empty string
+    userInput = key
+
     if userInput == '0':
         # Hero Faces UP
         x = 0
@@ -40,10 +43,8 @@ def heroTurn(game):
         # Bad input!
         game.hero.isAlive = False
         return -808080808
-    game.world.displayGrid()
+    game.world.displayGridH()
     return actions
-    #print(game.hero.inventory)
-    #print(game.score)
     
     
 def monsterTurn(game):
@@ -65,6 +66,6 @@ def monsterTurn(game):
         # Hero Moves RIGHT
         game.world.tryMoveEntity(game.monster.x,game.monster.y,game.monster.x+1,game.monster.y)
         actions -= 1
-    game.world.displayGrid()
+    game.world.displayGridM()
     return actions
         
