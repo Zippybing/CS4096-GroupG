@@ -31,11 +31,21 @@ class WorldGrid:
             rowtext = ""
             colorrow =[]
             for x in range(len(self.grid)):
-                #sys.stdout.write('['+self.grid[x][y].print_icon()+']')
-                rowtext += ' '+self.grid[x][y].print_icon()+' '
-                #Noise Visualizer
-                #rowtext += ' '+str(self.grid[x][y].noise)+' '
-                colorrow += self.grid[x][y].print_rep() + self.grid[x][y].print_rep() + self.grid[x][y].print_rep()
+                if  (x < self.gamestate.hero.x + 4 and x > self.gamestate.hero.x - 4 and y < self.gamestate.hero.y + 2 
+                and y > self.gamestate.hero.y - 2) or (x < self.gamestate.hero.x + 3 and x > self.gamestate.hero.x - 3 
+                and y < self.gamestate.hero.y + 3 and y > self.gamestate.hero.y - 3) or (y < self.gamestate.hero.y + 4 
+                and y > self.gamestate.hero.y - 4 and x < self.gamestate.hero.x + 2 and x > self.gamestate.hero.x - 2):
+                    #sys.stdout.write('['+self.grid[x][y].print_icon()+']')
+                    rowtext += ' '+self.grid[x][y].print_icon()+' '
+                    #Noise Visualizer
+                    #rowtext += ' '+str(self.grid[x][y].noise)+' '
+                    colorrow += self.grid[x][y].print_rep() + self.grid[x][y].print_rep() + self.grid[x][y].print_rep()
+                else :
+        		    #sys.stdout.write('['+self.grid[x][y].print_icon()+']')
+                    rowtext += '   '
+                    #Noise Visualizer
+                    #rowtext += ' '+str(self.grid[x][y].noise)+' '
+                    colorrow += [(0,0,0)] + [(0,0,0)] + [(0,0,0)]
             gridtext[0] += [str(rowtext)]
             gridtext[1] += [colorrow]
             sys.stdout.flush()

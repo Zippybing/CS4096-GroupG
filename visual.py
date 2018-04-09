@@ -62,7 +62,7 @@ def showmaphero(game, screen):
         #userInput = input('Give input: ').upper()
 
 def showmapmon(game, screen):
-    scoreboard = "Score: "+str(game.score) + "           " + "Lives: "+str(game.lives)
+    scoreboard = "Score: "+str(game.score)+ "              "  + "Floor: "+str(game.floor)
     counter = 0
     #input('Give input: ').upper()
 

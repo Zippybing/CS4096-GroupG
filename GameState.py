@@ -72,18 +72,28 @@ class GameState:
         return tmp
     def changecolorpalette(self):
         None
+        random.seed(self.seed+self.floor)
+        val = random.randint(0,500)
+        
         if(self.floor > 1):
             for row in self.world.grid:
                 for piece in row:
-                    if isinstance(piece.entity,Entities.Hero) or isinstance(piece.entity,Entities.Monster):
+                    if isinstance(piece.entity,Entities.Entity):
                         prep = piece.print_rep()
-                        prep[0] = ( prep[0][0],prep[0][1] ,((2+self.floor+self.seed)%4))
-                        piece.rep[0] =(piece.rep[0][0],piece.rep[0][1] ,((piece.rep[0][2]+self.floor+self.seed)%4))
-                        None
+                        
+                        prep[0] = ( prep[0][0],prep[0][1] ,(2+self.floor+val)%7)
+                        if (prep[0][0] == prep[0][2]) and not isinstance(piece.entity,Entities.Wall):
+                            
+                            while(val == prep[0][0]):
+                                val = random.randint(0,7)
+                            prep[0] = ( val%7,prep[0][1] ,(2+self.floor+val)%7)
+                    
+                        piece.rep[0] =(piece.rep[0][0],piece.rep[0][1] ,((2+self.floor+val)%7))
+
+                        
                     else:
-                        piece.rep[0] =(piece.rep[0][0],piece.rep[0][1] ,((piece.rep[0][2]+self.floor+self.seed)%4))
-                        prep = piece.print_rep()
-                        prep[0] = ( prep[0][0],prep[0][1] ,((prep[0][2]+self.floor+self.seed)%4))
-                    piece.rep[0] =(piece.rep[0][0],piece.rep[0][1] ,((piece.rep[0][2]+self.floor+self.seed)%4))
-                    None
+                        piece.rep[0] =(piece.rep[0][0],piece.rep[0][1] ,((2+self.floor+val)%7))
+                        if piece.rep[0][0] == piece.rep[0][2]:
+                            piece.rep[0] = ( 4,piece.rep[0][1] ,(2+self.floor+val)%7)
+                    
         
