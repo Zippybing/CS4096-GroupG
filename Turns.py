@@ -1,7 +1,7 @@
 #Turns
 from random import randint
 
-def heroTurn(game, key):
+def heroTurn(game, key,debug):
     actions = 0
 
     # Receive either a string representation of user keypress, or empty string
@@ -22,32 +22,36 @@ def heroTurn(game, key):
     elif userInput == 'W':
         # Hero Moves UP
         game.world.tryMoveEntity(game.hero.x,game.hero.y,game.hero.x,game.hero.y-1)
-        game.world.distributeNoise(game.hero.x, game.hero.y, 5)
+        game.world.distributeNoise(game.hero.x, game.hero.y, game.hero.noise)
         actions -= 1
     elif userInput == 'A':
         # Hero Moves LEFT
         game.world.tryMoveEntity(game.hero.x,game.hero.y,game.hero.x-1,game.hero.y)
-        game.world.distributeNoise(game.hero.x, game.hero.y, 5)
+        game.world.distributeNoise(game.hero.x, game.hero.y, game.hero.noise)
         actions -= 1
     elif userInput == 'S':
         # Hero Moves DOWNss
         game.world.tryMoveEntity(game.hero.x,game.hero.y,game.hero.x,game.hero.y+1)
-        game.world.distributeNoise(game.hero.x, game.hero.y, 5)
+        game.world.distributeNoise(game.hero.x, game.hero.y, game.hero.noise)
         actions -= 1
     elif userInput == 'D':
         # Hero Moves RIGHT
         game.world.tryMoveEntity(game.hero.x,game.hero.y,game.hero.x+1,game.hero.y)
-        game.world.distributeNoise(game.hero.x, game.hero.y, 5)
+        game.world.distributeNoise(game.hero.x, game.hero.y, game.hero.noise)
         actions -= 1
     elif userInput == 'X':
         # Bad input!
         game.hero.isAlive = False
         return -808080808
-    game.world.displayGrid()
+    if debug:
+        game.world.displayGridnorm()
+    else:
+        game.world.displayGridH()
+    
     return actions
     
     
-def monsterTurn(game):
+def monsterTurn(game,debug):
     actions = 0
     rand = randint(0,3)
     if rand == 0:
@@ -66,5 +70,9 @@ def monsterTurn(game):
         # Hero Moves RIGHT
         game.world.tryMoveEntity(game.monster.x,game.monster.y,game.monster.x+1,game.monster.y)
         actions -= 1
-    game.world.displayGrid()
+    if debug:
+        game.world.displayGridnorm()
+    else:
+        game.world.displayGridM()
     return actions
+        

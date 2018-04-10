@@ -1,3 +1,5 @@
+
+
 import Turns
 from random import randint
 from time import sleep
@@ -5,8 +7,8 @@ from asciimatics.screen import *
 #from main import mastergrid
 tmp = "YES\nYES\nYES"
 
-def showmaphero(game, screen):
-    scoreboard = "Score: "+str(game.score) + "           " + "Lives: "+str(game.lives)
+def showmaphero(game, screen,debug):
+    scoreboard = "Score: "+str(game.score)+ "              "  + "Floor: "+str(game.floor)
     counter = 0
 
     actions = game.hero.actionCap
@@ -14,13 +16,13 @@ def showmaphero(game, screen):
         linecounter = 0
         colortracker = 0
 
-        user_keypress = get_keypress_from_screen(screen)
+        
 
         # Title bar
         screen.print_at(game.level,
                    int(screen.width/2) - int(len(game.level)/2), 1,
-                    colour=randint(0, screen.colours - 1),
-                    bg=randint(0, screen.colours - 1))
+                    colour=7,
+                    bg=0)
         # Map grid
         for row in game.world.vizgrid[0]:
             # screen.print_at(row,
@@ -40,21 +42,27 @@ def showmaphero(game, screen):
         # Scoreboard
         screen.print_at(scoreboard,
                    int(screen.width/2) - int(len(scoreboard)/2), (int(screen.height)-1),
-                    colour=randint(0, screen.colours - 1),
-                    bg=randint(0, screen.colours - 1))
+                    colour=7,
+                    bg=0)
         # User keypress display -- DEBUGGING PURPOSES ONLY
-        screen.print_at(user_keypress, 0, 0) # prints out user keyboard input
+        screen.refresh()
+        while True:
+            keyboardinput = get_keypress_from_screen(screen)
+            if keyboardinput != "":
+                screen.print_at(keyboardinput, 0, 0) # prints out user keyboard input
+                break
+
         screen.refresh()
         
         
-        actions += Turns.heroTurn(game, user_keypress)
+        actions += Turns.heroTurn(game, keyboardinput,debug)
     screen.refresh()
     
 
         #userInput = input('Give input: ').upper()
 
-def showmapmon(game, screen):
-    scoreboard = "Score: "+str(game.score) + "           " + "Lives: "+str(game.lives)
+def showmapmon(game, screen,debug):
+    scoreboard = "Score: "+str(game.score)+ "              "  + "Floor: "+str(game.floor)
     counter = 0
     #input('Give input: ').upper()
 
@@ -66,8 +74,8 @@ def showmapmon(game, screen):
         # Title bar
         screen.print_at(game.level,
                 int(screen.width/2) - int(len(game.level)/2), 1,
-                    colour=randint(0, screen.colours - 1),
-                    bg=randint(0, screen.colours - 1))
+                    colour=7,
+                    bg=0)
         # Map grid
         for row in game.world.vizgrid[0]:
             # screen.print_at(row,
@@ -87,11 +95,11 @@ def showmapmon(game, screen):
         # Scoreboard
         screen.print_at(scoreboard,
                 int(screen.width/2) - int(len(scoreboard)/2), (int(screen.height)-1),
-                    colour=randint(0, screen.colours - 1),
-                    bg=randint(0, screen.colours - 1))
+                    colour=7,
+                    bg=0)
         screen.refresh()
         
-        actions += Turns.monsterTurn(game)
+        actions += Turns.monsterTurn(game,debug)
 
         time.sleep(.25)
     screen.refresh()

@@ -31,7 +31,7 @@ class Hero(Creature):
         self.isAlive = True
         self.inventory = inventory
         self.noise = 5
-        self.visual = 3
+        self.visual = 4
         
     def addToInventory(self, item):
         self.inventory.append(item)
@@ -77,11 +77,11 @@ class Gem(Item):
         self.rep = [(5,4,2)]
 
 class Shoes(Item):
-    def __init__(self, soundMod):
+    def __init__(self, noiseMod):
         self.icon = 'S'
         Item.__init__(self)
         self.rep = [(5,4,2)]
-        self.soundMod = soundMod
+        self.noiseMod = noiseMod
 
 # Non Functional Items, Do Not Use
 class Rock(Item):

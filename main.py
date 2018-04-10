@@ -6,25 +6,25 @@ import time
 import Turns as turns
 from asciimatics.screen import *
 
-class Point:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
 def main():
     game = GameState.GameState()
-        
+    debug = False
     while game.hero.isAlive:
+        game.floor += 1
         game.world.createMap(24,24)
         game.populate()
-        
+        game.changecolorpalette()
+        None
         screen = Screen.open()
 
         while game.checkActive():
-            game.world.displayGrid()
+            if debug:
+                game.world.displayGridnorm()
+            else:
+                game.world.displayGridH()
         
             #Hero Turn
-            visual.showmaphero(game, screen)
+            visual.showmaphero(game, screen,debug)
             # Item Turn
             for item in game.hero.inventory:
                 if item.applied == False:
@@ -38,7 +38,7 @@ def main():
                         game.hero.noise += item.noiseMod
                     item.applied = True
             # Monster Turn
-            visual.showmapmon(game, screen)
+            visual.showmapmon(game, screen,debug)
             # Noise Cleanup and other Cleanup
             game.world.clearNoises()
        
@@ -50,4 +50,3 @@ def main():
         print("Damn, you suck!")
 if __name__ == '__main__':
     main()
-    
