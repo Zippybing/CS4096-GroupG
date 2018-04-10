@@ -6,15 +6,20 @@ import time
 import Turns as turns
 from asciimatics.screen import *
 
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
 def main():
     game = GameState.GameState()
     debug = False
+
     while game.hero.isAlive:
         game.floor += 1
         game.world.createMap(24,24)
         game.populate()
-        game.changecolorpalette()
-        None
+        
         screen = Screen.open()
 
         while game.checkActive():
