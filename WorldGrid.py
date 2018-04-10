@@ -4,12 +4,11 @@ import Entities
 from LevelGenerator import create_level
 
 class WorldGrid:
-    def __init__(self,game):
+    def __init__(self):
         self.grid = None
         self.width = None
         self.height = None
         self.vizgrid = None
-        self.gamestate = game
         
     #Initialize a map filled with tiles.
     def createMap(self, x, y):
@@ -24,76 +23,18 @@ class WorldGrid:
                 if base[i][j] == 1:
                     self.placeEntity(i, j, Entities.Wall())
         
-
-    def displayGridnorm(self):
+    #Print to the console ASCII representation of map
+    def displayGrid(self):
         gridtext = [[],[]]
         for y in range(len(self.grid[0])):
             rowtext = ""
             colorrow =[]
             for x in range(len(self.grid)):
-                
+                #sys.stdout.write('['+self.grid[x][y].print_icon()+']')
                 rowtext += ' '+self.grid[x][y].print_icon()+' '
                 #Noise Visualizer
                 #rowtext += ' '+str(self.grid[x][y].noise)+' '
                 colorrow += self.grid[x][y].print_rep() + self.grid[x][y].print_rep() + self.grid[x][y].print_rep()
-                
-            gridtext[0] += [str(rowtext)]
-            gridtext[1] += [colorrow]
-            sys.stdout.flush()
-            self.vizgrid = gridtext
-        return gridtext   
-
-
-    #Print to the console ASCII representation of map
-    def displayGridH(self):
-        gridtext = [[],[]]
-        for y in range(len(self.grid[0])):
-            rowtext = ""
-            colorrow =[]
-            for x in range(len(self.grid)):
-                if  (x < self.gamestate.hero.x + 4 and x > self.gamestate.hero.x - 4 and y < self.gamestate.hero.y + 2 
-                and y > self.gamestate.hero.y - 2) or (x < self.gamestate.hero.x + 3 and x > self.gamestate.hero.x - 3 
-                and y < self.gamestate.hero.y + 3 and y > self.gamestate.hero.y - 3) or (y < self.gamestate.hero.y + 4 
-                and y > self.gamestate.hero.y - 4 and x < self.gamestate.hero.x + 2 and x > self.gamestate.hero.x - 2):
-                    #sys.stdout.write('['+self.grid[x][y].print_icon()+']')
-                    rowtext += ' '+self.grid[x][y].print_icon()+' '
-                    #Noise Visualizer
-                    #rowtext += ' '+str(self.grid[x][y].noise)+' '
-                    colorrow += self.grid[x][y].print_rep() + self.grid[x][y].print_rep() + self.grid[x][y].print_rep()
-                else :
-        		    #sys.stdout.write('['+self.grid[x][y].print_icon()+']')
-                    rowtext += '   '
-                    #Noise Visualizer
-                    #rowtext += ' '+str(self.grid[x][y].noise)+' '
-                    colorrow += [(0,0,0)] + [(0,0,0)] + [(0,0,0)]
-            gridtext[0] += [str(rowtext)]
-            gridtext[1] += [colorrow]
-            sys.stdout.flush()
-            self.vizgrid = gridtext
-        return gridtext
-
-
-    def displayGridM(self):
-        gridtext = [[],[]]
-        for y in range(len(self.grid[0])):
-            rowtext = ""
-            colorrow =[]
-            for x in range(len(self.grid)):
-                #sys.stdout.write('['+self.grid[x][y].print_icon()+']')
-                if( not isinstance(self.grid[x][y].entity,(Entities.Wall,Entities.Monster)) ):
-                    rowtext += ' '+str(self.grid[x][y].noise)+' '
-                    noiserep = self.grid[x][y].print_rep()
-                    noiserep = [(3,noiserep[0][1],0)]
-                else:
-                    rowtext += ' '+self.grid[x][y].print_icon()+' '
-                    noiserep = self.grid[x][y].print_rep()
-                    noiserep = [(noiserep[0][0],noiserep[0][1],0)]
-                colorrow += noiserep + noiserep + noiserep
-                #sys.stdout.write('['+self.grid[x][y].print_icon()+']')
-                
-                #Noise Visualizer
-                #rowtext += ' '+str(self.grid[x][y].noise)+' '
-                
             gridtext[0] += [str(rowtext)]
             gridtext[1] += [colorrow]
             sys.stdout.flush()
@@ -146,7 +87,6 @@ class WorldGrid:
                         elif type(target) == Entities.Exit:
                             print("YOU ESCAPED THE LEVEL")
                             agent.hasEscaped = True
-                            self.gamestate.score +=100*self.gamestate.floor
                             self.placeEntity(x1,y1,None)
                             return
                     #Monster
@@ -176,7 +116,7 @@ class WorldGrid:
     
     #Propagates sound values from tile evenly
     def distributeNoise(self, x, y, noise):
-        if (noise == 0 or x<0 or y<0 or x>len(self.grid)-1 or y>len(self.grid[0])-1) or (isinstance(self.grid[x][y].entity,Entities.Wall)):
+        if noise == 0 or x<0 or y<0 or x>len(self.grid)-1 or y>len(self.grid[0])-1:
             return
         else:
             if self.grid[x][y].noise < noise:

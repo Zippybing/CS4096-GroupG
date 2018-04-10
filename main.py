@@ -26,7 +26,7 @@ def main():
             #Hero Turn
             visual.showmaphero(game, screen)
             # Item Turn
-            for item in actor.inventory:
+            for item in game.hero.inventory:
                 if item.applied == False:
                     if item.icon == 'P':
                         game.hero.actionCap += item.actionMod
