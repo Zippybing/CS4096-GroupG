@@ -26,7 +26,17 @@ def main():
             #Hero Turn
             visual.showmaphero(game, screen,debug)
             # Item Turn
-            
+            for item in actor.inventory:
+                if item.applied == False:
+                    if item.icon == 'P':
+                        pass
+                    elif item.icon == 'T':
+                        pass
+                    elif item.icon == 'G':
+                        pass
+                    elif item.icon == 'S':
+                        pass
+                    item.applied = True
             # Monster Turn
             visual.showmapmon(game, screen,debug)
             # Noise Cleanup and other Cleanup
