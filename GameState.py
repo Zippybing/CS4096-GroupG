@@ -26,10 +26,12 @@ class GameState:
         self.hero.hasEscaped = False
         generated = []
         
+        # Place Exit
         randX ,randY = self.uniqueGen(generated)
         self.world.placeEntity(randX,randY,self.exit)
         generated.append((self.exit.x,self.exit.y))
 
+        # Place Hero
         randX ,randY = self.uniqueGen(generated)
         placeAble = self.iDFS((randX,randY),(self.exit.x,self.exit.y))
         while(not placeAble):
@@ -38,6 +40,7 @@ class GameState:
         self.world.placeEntity(randX,randY,self.hero)
         generated.append((self.hero.x,self.hero.y))
         
+        # Place Monster
         randX ,randY = self.uniqueGen(generated)
         placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
         while(not placeAble):
@@ -47,6 +50,8 @@ class GameState:
         generated.append((self.monster.x,self.monster.y))
         print(generated)
         
+        # Place Items
+
         '''
         self.world.placeEntity(3,4,Entities.Key())
         self.world.placeEntity(5,5,Entities.Gem(100))

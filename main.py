@@ -29,13 +29,13 @@ def main():
             for item in actor.inventory:
                 if item.applied == False:
                     if item.icon == 'P':
-                        pass
+                        game.hero.actionCap += item.actionMod
                     elif item.icon == 'T':
-                        pass
+                        game.hero.visual += item.visMod
                     elif item.icon == 'G':
-                        pass
+                        game.score += item.scoreMod
                     elif item.icon == 'S':
-                        pass
+                        game.hero.noise += item.noiseMod
                     item.applied = True
             # Monster Turn
             visual.showmapmon(game, screen)

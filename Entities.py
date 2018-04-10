@@ -30,6 +30,8 @@ class Hero(Creature):
         self.hasEscaped = False
         self.isAlive = True
         self.inventory = inventory
+        self.noise = 5
+        self.visual = 3
         
     def addToInventory(self, item):
         self.inventory.append(item)
