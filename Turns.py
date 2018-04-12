@@ -22,22 +22,22 @@ def heroTurn(game, key,debug):
     elif userInput == 'W':
         # Hero Moves UP
         game.world.tryMoveEntity(game.hero.x,game.hero.y,game.hero.x,game.hero.y-1)
-        game.world.distributeNoise(game.hero.x, game.hero.y, 5)
+        game.world.distributeNoise(game.hero.x, game.hero.y, game.hero.noise)
         actions -= 1
     elif userInput == 'A':
         # Hero Moves LEFT
         game.world.tryMoveEntity(game.hero.x,game.hero.y,game.hero.x-1,game.hero.y)
-        game.world.distributeNoise(game.hero.x, game.hero.y, 5)
+        game.world.distributeNoise(game.hero.x, game.hero.y, game.hero.noise)
         actions -= 1
     elif userInput == 'S':
         # Hero Moves DOWNss
         game.world.tryMoveEntity(game.hero.x,game.hero.y,game.hero.x,game.hero.y+1)
-        game.world.distributeNoise(game.hero.x, game.hero.y, 5)
+        game.world.distributeNoise(game.hero.x, game.hero.y, game.hero.noise)
         actions -= 1
     elif userInput == 'D':
         # Hero Moves RIGHT
         game.world.tryMoveEntity(game.hero.x,game.hero.y,game.hero.x+1,game.hero.y)
-        game.world.distributeNoise(game.hero.x, game.hero.y, 5)
+        game.world.distributeNoise(game.hero.x, game.hero.y, game.hero.noise)
         actions -= 1
     elif userInput == 'X':
         # Bad input!
