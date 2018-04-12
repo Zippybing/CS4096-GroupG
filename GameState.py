@@ -13,7 +13,7 @@ class GameState:
         self.floor = 0
         self.level = "Robbing The Three Little Bears Of Everything, Revengeance..." #random seed for genration or actual name
         self.world = WorldGrid.WorldGrid(self) #is a worldgrid object
-        self.seed = None    #will have a random seed that is used to generate the worlds in a deterministic way
+        self.seed = 1234    #will have a random seed that is used to generate the worlds in a deterministic way
         self.hero = Entities.Hero(0,4,'DEFAULT_HERO')
         self.monster = Entities.Monster(5,'DEFAULT_MONSTER')
         self.exit = Entities.Exit()
@@ -189,21 +189,31 @@ class GameState:
             
     
     
-    '''
-    # BFS - Connecting Two Points, the Hard Way
-    def dfs_wrapper(self, start_x, start_y, goal_x, goal_y):
-        world = self.world.grid
-        dfs_grid = [ [False for _ in range(y)] for _ in range(x)]
+    def changecolorpalette(self):
+        None
+        random.seed(self.seed+self.floor)
+        val = random.randint(0,500)
         
-        if dfs(dfs_grid, goal_x, goal_y):
-            return True
-        else:
-            return False
+        if(self.floor > 1):
+            for row in self.world.grid:
+                for piece in row:
+                    if isinstance(piece.entity,Entities.Entity):
+                        prep = piece.print_rep()
+                        
+                        prep[0] = ( prep[0][0],prep[0][1] ,(2+self.floor+val)%7)
+                        if (prep[0][0] == prep[0][2]) and not isinstance(piece.entity,Entities.Wall):
+                            
+                            while(val == prep[0][0]):
+                                val = random.randint(0,7)
+                            prep[0] = ( val%7,prep[0][1] ,(2+self.floor+val)%7)
+                    
+                        piece.rep[0] =(piece.rep[0][0],piece.rep[0][1] ,((2+self.floor+val)%7))
+
+                        
+                    else:
+                        piece.rep[0] =(piece.rep[0][0],piece.rep[0][1] ,((2+self.floor+val)%7))
+                        if piece.rep[0][0] == piece.rep[0][2]:
+                            piece.rep[0] = ( 4,piece.rep[0][1] ,(2+self.floor+val)%7)
+                    
         
-    def dfs(self, dfs_grid, grid_x, grid_y):
-        # Check the neighboring grid tiles
-        # If the neighboring grid is within range, and not a Wall, search it too
-        dfs_grid[grid_x][grid_y] = True # Space has been visited
-        if grid_x - 1 >= len(dfs_grid) and grid_y - 1 >= len(dfs
-    '''    
         
