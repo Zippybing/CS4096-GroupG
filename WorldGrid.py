@@ -24,6 +24,26 @@ class WorldGrid:
                 if base[i][j] == 1:
                     self.placeEntity(i, j, Entities.Wall())
         
+
+    def displayGridnorm(self):
+        gridtext = [[],[]]
+        for y in range(len(self.grid[0])):
+            rowtext = ""
+            colorrow =[]
+            for x in range(len(self.grid)):
+                
+                rowtext += ' '+self.grid[x][y].print_icon()+' '
+                #Noise Visualizer
+                #rowtext += ' '+str(self.grid[x][y].noise)+' '
+                colorrow += self.grid[x][y].print_rep() + self.grid[x][y].print_rep() + self.grid[x][y].print_rep()
+                
+            gridtext[0] += [str(rowtext)]
+            gridtext[1] += [colorrow]
+            sys.stdout.flush()
+            self.vizgrid = gridtext
+        return gridtext   
+
+
     #Print to the console ASCII representation of map
     def displayGridH(self):
         gridtext = [[],[]]
@@ -31,10 +51,16 @@ class WorldGrid:
             rowtext = ""
             colorrow =[]
             for x in range(len(self.grid)):
-                if  (x < self.gamestate.hero.x + 4 and x > self.gamestate.hero.x - 4 and y < self.gamestate.hero.y + 2 
-                and y > self.gamestate.hero.y - 2) or (x < self.gamestate.hero.x + 3 and x > self.gamestate.hero.x - 3 
-                and y < self.gamestate.hero.y + 3 and y > self.gamestate.hero.y - 3) or (y < self.gamestate.hero.y + 4 
-                and y > self.gamestate.hero.y - 4 and x < self.gamestate.hero.x + 2 and x > self.gamestate.hero.x - 2):
+                inRange = False
+                xdiff = self.gamestate.hero.visual
+                ydiff = 2
+                rng = xdiff - ydiff + 1
+                for c in range(rng):
+                    if x < self.gamestate.hero.x + xdiff and x > self.gamestate.hero.x - xdiff and y < self.gamestate.hero.y + ydiff and y > self.gamestate.hero.y - ydiff:
+                        inRange = True
+                    xdiff -= 1
+                    ydiff += 1
+                if inRange == True:
                     #sys.stdout.write('['+self.grid[x][y].print_icon()+']')
                     rowtext += ' '+self.grid[x][y].print_icon()+' '
                     #Noise Visualizer
