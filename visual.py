@@ -7,11 +7,11 @@ from asciimatics.screen import *
 #from main import mastergrid
 tmp = "YES\nYES\nYES"
 
-def showmaphero(game, screen):
+def showmaphero(game, screen,debug):
     scoreboard = "Score: "+str(game.score)+ "              "  + "Floor: "+str(game.floor)
     counter = 0
 
-    actions = game.hero.speed
+    actions = game.hero.actionCap
     while actions > 0 and game.checkActive():
         linecounter = 0
         colortracker = 0
@@ -55,18 +55,18 @@ def showmaphero(game, screen):
         screen.refresh()
         
         
-        actions += Turns.heroTurn(game, keyboardinput)
+        actions += Turns.heroTurn(game, keyboardinput,debug)
     screen.refresh()
     
 
         #userInput = input('Give input: ').upper()
 
-def showmapmon(game, screen):
+def showmapmon(game, screen,debug):
     scoreboard = "Score: "+str(game.score)+ "              "  + "Floor: "+str(game.floor)
     counter = 0
     #input('Give input: ').upper()
 
-    actions = game.monster.speed
+    actions = game.monster.actionCap
     while actions > 0 and game.checkActive():
         linecounter = 0
         colortracker = 0
@@ -99,7 +99,7 @@ def showmapmon(game, screen):
                     bg=0)
         screen.refresh()
         
-        actions += Turns.monsterTurn(game)
+        actions += Turns.monsterTurn(game,debug)
 
         time.sleep(.25)
     screen.refresh()

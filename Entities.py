@@ -5,14 +5,15 @@ class Entity(object):
 
 '''Sub-Entities of Entity'''
 class Creature(Entity):
-    def __init__(self, speed, name):
+    def __init__(self, actionCap, name):
         Entity.__init__(self)
-        self.speed = speed
+        self.actionCap = actionCap
         self.name = name
 
 class Item(Entity):
     def __init__(self):
         Entity.__init__(self)
+        self.applied = False
 
 class Fixture(Entity):
     def __init__(self, state):
@@ -22,13 +23,15 @@ class Fixture(Entity):
 
 '''Sub-Entities of Creature'''
 class Hero(Creature):
-    def __init__(self, direction, speed, name, inventory = []):
-        Creature.__init__(self, speed, name)
+    def __init__(self, direction, actionCap, name, inventory = []):
+        Creature.__init__(self, actionCap, name)
         self.icon = 'H'
         self.rep = [(7,2,2)]       
         self.hasEscaped = False
         self.isAlive = True
         self.inventory = inventory
+        self.noise = 5
+        self.visual = 4
         
     def addToInventory(self, item):
         self.inventory.append(item)
@@ -38,10 +41,10 @@ class Hero(Creature):
             print(i)
 
 class Monster(Creature):
-    def __init__(self, speed, name, drops = []):
+    def __init__(self, actionCap, name, drops = []):
         self.icon = 'M'
         self.rep = [(1,1,2)]
-        Creature.__init__(self, speed, name)
+        Creature.__init__(self, actionCap, name)
         drops = []
 
     def addDrop(self, drops):
@@ -52,41 +55,47 @@ class Monster(Creature):
 
         
 '''Sub-Entities of Item'''
-class Key(Item):
-    def __init__(self, door=1234):
-        self.icon = 'K'
-        self.rep = [(5,4,2)]
-        Item.__init__(self)
-        self.door = door
-
 class Potion(Item):
-    def __init__(self, color='Red'):
+    def __init__(self, actionMod):
         self.icon = 'P'
         self.rep = [(5,4,2)]
         Item.__init__(self)
-        self.color = color
+        self.actionMod = actionMod
 
 class Torch(Item):
-    pass
+    def __init__(self, visMod):
+        self.icon = 'T'
+        self.rep = [(5,4,2)]
+        Item.__init__(self)
+        self.visMod = visMod
 
 class Gem(Item):
-    def __init__(self, score):
+    def __init__(self, scoreMod):
         self.icon = 'G'
         Item.__init__(self)
-        self.score = score
+        self.scoreMod = scoreMod
         self.rep = [(5,4,2)]
 
+class Shoes(Item):
+    def __init__(self, noiseMod):
+        self.icon = 'S'
+        Item.__init__(self)
+        self.rep = [(5,4,2)]
+        self.noiseMod = noiseMod
+
+# Non Functional Items, Do Not Use
 class Rock(Item):
     def __init__(self):
         self.icon = 'R'
         Item.__init__(self)
         self.rep = [(5,4,2)]
 
-class Shoes(Item):
-    def __init__(self):
-        self.icon = 'S'
-        Item.__init__(self)
+class Key(Item):
+    def __init__(self, door=1234):
+        self.icon = 'K'
         self.rep = [(5,4,2)]
+        Item.__init__(self)
+        self.door = door
 
 '''Sub-Entities of Fixture'''
 
