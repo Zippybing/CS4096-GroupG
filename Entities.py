@@ -58,6 +58,7 @@ class Monster(Creature):
 class Potion(Item):
     def __init__(self, actionMod):
         self.icon = 'P'
+        self.name = 'Potion'
         self.rep = [(5,4,2)]
         Item.__init__(self)
         self.actionMod = actionMod
@@ -65,6 +66,7 @@ class Potion(Item):
 class Torch(Item):
     def __init__(self, visMod):
         self.icon = 'T'
+        self.name = 'Torch'
         self.rep = [(5,4,2)]
         Item.__init__(self)
         self.visMod = visMod
@@ -72,6 +74,7 @@ class Torch(Item):
 class Gem(Item):
     def __init__(self, scoreMod):
         self.icon = 'G'
+        self.name = 'Gem'
         Item.__init__(self)
         self.scoreMod = scoreMod
         self.rep = [(5,4,2)]
@@ -79,6 +82,7 @@ class Gem(Item):
 class Shoes(Item):
     def __init__(self, noiseMod):
         self.icon = 'S'
+        self.name = 'Shoe'
         Item.__init__(self)
         self.rep = [(5,4,2)]
         self.noiseMod = noiseMod
