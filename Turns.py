@@ -1,5 +1,5 @@
 #Turns
-from random import randint
+from random import randint, choice
 
 def heroTurn(game, key,debug):
     actions = 0
@@ -53,25 +53,54 @@ def heroTurn(game, key,debug):
     
 def monsterTurn(game,debug):
     actions = 0
-    rand = randint(0,3)
-    if rand == 0:
+    direction = randint(0,3)
+    maxNoise = -1
+    if game.world.grid[game.monster.x-1][game.monster.y-1].noise > maxNoise:
+        maxNoise = game.world.grid[game.monster.x-1][game.monster.y-1].noise
+        direction = choice([0,1])
+    if game.world.grid[game.monster.x+1][game.monster.y-1].noise > maxNoise:
+        maxNoise = game.world.grid[game.monster.x+1][game.monster.y-1].noise
+        direction = choice([0,3])
+    if game.world.grid[game.monster.x+1][game.monster.y+1].noise > maxNoise:
+        maxNoise = game.world.grid[game.monster.x+1][game.monster.y+1].noise
+        direction = choice([2,3])
+    if game.world.grid[game.monster.x-1][game.monster.y+1].noise > maxNoise:
+        maxNoise = game.world.grid[game.monster.x-1][game.monster.y+1].noise
+        direction = choice([1,2])
+    if game.world.grid[game.monster.x][game.monster.y-1].noise > maxNoise:
+        maxNoise = game.world.grid[game.monster.x][game.monster.y-1].noise
+        direction = 0
+    if game.world.grid[game.monster.x+1][game.monster.y].noise > maxNoise:
+        maxNoise = game.world.grid[game.monster.x+1][game.monster.y].noise
+        direction = 3
+    if game.world.grid[game.monster.x][game.monster.y+1].noise > maxNoise:
+        maxNoise = game.world.grid[game.monster.x][game.monster.y+1].noise
+        direction = 2
+    if game.world.grid[game.monster.x-1][game.monster.y].noise > maxNoise:
+        maxNoise = game.world.grid[game.monster.x-1][game.monster.y].noise
+        direction = 1
+    
+    if maxNoise <= 0:
+        direction = randint(0,3)
+        
+    if direction == 0:
         # Hero Moves UP
         game.world.tryMoveEntity(game.monster.x,game.monster.y,game.monster.x,game.monster.y-1)
         actions -= 1
-    elif rand == 1:
+    elif direction == 1:
         # Hero Moves LEFT
         game.world.tryMoveEntity(game.monster.x,game.monster.y,game.monster.x-1,game.monster.y)
         actions -= 1
-    elif rand == 2:
+    elif direction == 2:
         # Hero Moves DOWN
         game.world.tryMoveEntity(game.monster.x,game.monster.y,game.monster.x,game.monster.y+1)
         actions -= 1
-    elif rand == 3:
+    elif direction == 3:
         # Hero Moves RIGHT
         game.world.tryMoveEntity(game.monster.x,game.monster.y,game.monster.x+1,game.monster.y)
         actions -= 1
     if debug:
-        game.world.displayGridnorm()
+        game.world.displayGridM()
     else:
         game.world.displayGridM()
     return actions

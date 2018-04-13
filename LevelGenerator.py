@@ -7,7 +7,7 @@ import sys
 import random
 
 # Seed random
-random.seed(1234)
+random.seed(312345)
 
 # Proof of [x][y] concept -- 
 # is actually put into grid as [y=0][x=2], but print_grid displays as [x=0][y=2]

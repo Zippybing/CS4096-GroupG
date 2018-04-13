@@ -13,7 +13,7 @@ class GameState:
         self.floor = 0
         self.level = "Robbing The Three Little Bears Of Everything, Revengeance..." #random seed for genration or actual name
         self.world = WorldGrid.WorldGrid(self) #is a worldgrid object
-        self.seed = 1234    #will have a random seed that is used to generate the worlds in a deterministic way
+        self.seed = 12345    #will have a random seed that is used to generate the worlds in a deterministic way
         self.hero = Entities.Hero(0,4,'DEFAULT_HERO')
         self.monster = Entities.Monster(5,'DEFAULT_MONSTER')
         self.exit = Entities.Exit()
@@ -21,19 +21,6 @@ class GameState:
 
     def checkActive(self):
         return self.hero.isAlive and not self.hero.hasEscaped
-        
-    # def populate(self):
-    #     self.hero.hasEscaped = False
-        
-    #     self.world.placeEntity(4,5,Entities.Exit())
-    #     self.world.placeEntity(5,4,self.hero)
-    #     self.world.placeEntity(4,3,self.monster)
-        
-    #     # self.world.placeEntity(3,4,Entities.Key())
-        # self.world.placeEntity(5,5,Entities.Gem(100))
-        # self.world.placeEntity(7,3,Entities.Shoes(-1))
-        # self.world.placeEntity(10,3,Entities.Potion(1))
-        # self.world.placeEntity(7,4,Entities.Torch(1))
 
     def populate(self):
         self.hero.hasEscaped = False
@@ -78,7 +65,7 @@ class GameState:
                 s += 1
 
         # Place Potions
-        if p < 2 and random.randint(1, 100) < 10:
+        if p <= 2 and random.randint(1, 100) < 101:
             randX, randY = self.uniqueGen(generated)
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
             while(not placeAble):
@@ -89,7 +76,7 @@ class GameState:
             print(generated)
 
         # Place Torches
-        if t < 2 and random.randint(1, 100) < 10:
+        if t <= 2 and random.randint(1, 100) < 101:
             randX, randY = self.uniqueGen(generated)
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
             while(not placeAble):
@@ -100,7 +87,7 @@ class GameState:
             print(generated)
 
         # Place Shoes
-        if s < 2 and random.randint(1, 100) < 10:
+        if s <= 2 and random.randint(1, 100) < 101:
             randX, randY = self.uniqueGen(generated)
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
             while(not placeAble):
@@ -120,13 +107,6 @@ class GameState:
             self.world.placeEntity(randX,randY,Entities.Gem(100))
             generated.append((randX,randY))
             print(generated)
-
-        '''
-        self.world.placeEntity(5,5,Entities.Gem(100))
-        self.world.placeEntity(7,3,Entities.Shoes(-1))
-        self.world.placeEntity(10,3,Entities.Potion(1))
-        self.world.placeEntity(7,4,Entities.Torch(1))
-        '''
        
         print(self.iDFS((self.hero.x,self.hero.y),(self.monster.x,self.monster.y)))
 
