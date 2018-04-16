@@ -11,7 +11,7 @@ from asciimatics.scene import Scene
 
 
 
-def main(game,debug,menudata):
+def main(game,debug,menudata,screen):
     None
     
     
@@ -21,7 +21,7 @@ def main(game,debug,menudata):
         game.world.createMap(24,24)
         game.populate()
         game.changecolorpalette()
-        screen = Screen.open()
+        #screen = Screen.open()
         visual.blackout(screen)
         while game.checkActive():
             if debug[0]:
@@ -47,9 +47,10 @@ def main(game,debug,menudata):
             # Noise Cleanup and other Cleanup
             game.world.clearNoises()
        
-    screen.close(restore=True)
+    #screen.close(restore=True)
 
     if game.hero.hasEscaped:
         print("Congratulations, you died!")
     else:
+        return None
         print("Damn, you suck!")

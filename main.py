@@ -2,6 +2,7 @@ import GameState
 import Entities
 import visual
 from Menus import MainMenu
+import maingameloop
 import random
 import time
 import Turns as turns
@@ -17,13 +18,11 @@ def preinit():
     screen = Screen.open()
     Scenes = []
     debug = [True]
-    game = GameState.GameState()
+    game = []
     data = MainMenu(game,screen,debug)
-    screen.close()
-    main(game,debug)
 
 
-def main(game,debug):
+""" def main(game,debug):
     None
     
     
@@ -66,7 +65,7 @@ def main(game,debug):
         print("Congratulations, you died!")
     else:
         print("Damn, you suck!")
-
+ """
 
 if __name__ == '__main__':
     preinit()
