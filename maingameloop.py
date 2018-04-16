@@ -1,29 +1,17 @@
+
 import GameState
 import Entities
 import visual
-from Menus import MainMenu
 import random
 import time
 import Turns as turns
 from asciimatics.screen import *
 from asciimatics.scene import Scene
-class Point:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
 
 
-def preinit():
-    screen = Screen.open()
-    Scenes = []
-    debug = [True]
-    game = GameState.GameState()
-    data = MainMenu(game,screen,debug)
-    screen.close()
-    main(game,debug)
 
 
-def main(game,debug):
+def main(game,debug,menudata):
     None
     
     
@@ -34,13 +22,12 @@ def main(game,debug):
         game.populate()
         game.changecolorpalette()
         screen = Screen.open()
-
+        visual.blackout(screen)
         while game.checkActive():
             if debug[0]:
                 game.world.displayGridnorm()
             else:
                 game.world.displayGridH()
-        
             #Hero Turn
             visual.showmaphero(game, screen,debug)
             # Item Turn
@@ -66,7 +53,3 @@ def main(game,debug):
         print("Congratulations, you died!")
     else:
         print("Damn, you suck!")
-
-
-if __name__ == '__main__':
-    preinit()

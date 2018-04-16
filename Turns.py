@@ -43,7 +43,7 @@ def heroTurn(game, key,debug):
         # Bad input!
         game.hero.isAlive = False
         return -808080808
-    if debug:
+    if debug[0]:
         game.world.displayGridnorm()
     else:
         game.world.displayGridH()
@@ -70,7 +70,7 @@ def monsterTurn(game,debug):
         # Hero Moves RIGHT
         game.world.tryMoveEntity(game.monster.x,game.monster.y,game.monster.x+1,game.monster.y)
         actions -= 1
-    if debug:
+    if debug[0]:
         game.world.displayGridnorm()
     else:
         game.world.displayGridM()

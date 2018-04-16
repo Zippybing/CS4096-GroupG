@@ -131,3 +131,18 @@ def get_keypress_from_screen(screen):
     # If input does not exist, send back nothing
     else:
         return ""
+
+
+def blackout(screen):
+    counter = 0
+    for col in range(screen.width):
+        for row in range(screen.height):
+            counter += 1
+            screen.print_at(' ',
+                row,col,
+                    colour=0,
+                    bg=0)
+
+    None
+
+    None
