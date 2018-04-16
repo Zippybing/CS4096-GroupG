@@ -18,17 +18,27 @@ import random
 import copy
 
 def MainMenu(game,screen,debug,oldpalette):
-    
+    def endgame():
+        screen.close()
+        quit()
+        sys.exit(0)
+        None
     def endmenu():
         debug[0] = False
         game = GameState.GameState()
         Mmenu.save()
         looksy = Mmenu.data
         if looksy['seedval'] != "":
-            game.seed = int(str(looksy['seedval']))
+            converted = 0
+            for char in looksy['seedval']:
+                converted += ord(char)
+            game.seed = int(converted)
         random.seed(game.seed)
         if looksy['nameval'] != "":
-            game.name = str(looksy['nameval'])
+            if len(looksy["nameval"]) >= 20:
+                game.name = str(looksy['nameval'])[:21]
+            else:
+                game.name = str(looksy['nameval'])
         debug[0] = looksy['Debug']
         #visual.blackout(screen)
         main(game,debug,looksy,screen)
@@ -57,6 +67,7 @@ def MainMenu(game,screen,debug,oldpalette):
 
     bottomrow = Layout([1, 1, 1, 1])
     Mmenu.add_layout(bottomrow)
+    bottomrow.add_widget(Button("Exit Game",endgame),0)
     bottomrow.add_widget(Button("Start Level",endmenu),3)
     Mmenu.fix()
 
