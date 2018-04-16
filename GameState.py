@@ -28,8 +28,14 @@ class GameState:
         generated = []
         numberOfMonsters = self.calculateMonsterQuantity()
         
+        self.monsters.clear() 
+        for i in range(numberOfMonsters): 
+            self.monsters.append(Entities.Monster(4,'DEFAULT_MONSTER'))
+        
         # Place Exit
         randX ,randY = self.uniqueGen(generated)
+        while self.world.grid[randX][randY].entity is not None:
+            randX ,randY = self.uniqueGen(generated)
         self.world.placeEntity(randX,randY,self.exit)
         generated.append((self.exit.x,self.exit.y))
 
@@ -43,14 +49,13 @@ class GameState:
         generated.append((self.hero.x,self.hero.y))
         
         # Place Monster(s)
-        self.monsters.clear() # Clear the list of monsters from previous levels
+        # Clear the list of monsters from previous levels
         for i in range(numberOfMonsters): 
             randX, randY = self.uniqueGen(generated)
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
             while(not placeAble):
                 randX ,randY = self.uniqueGen(generated)
                 placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
-            self.monsters.append(Entities.Monster(5,'DEFAULT_MONSTER'))
             self.world.placeEntity(randX,randY,self.monsters[i])
             generated.append((self.monsters[i].x,self.monsters[i].y))
             print(generated)
@@ -72,10 +77,12 @@ class GameState:
         # Place Potions
         if p <= 2 and random.randint(1, 100) < 101:
             randX, randY = self.uniqueGen(generated)
+            '''
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
             while(not placeAble):
                 randX ,randY = self.uniqueGen(generated)
                 placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
+            '''
             self.world.placeEntity(randX,randY,Entities.Potion(1))
             generated.append((randX,randY))
             print(generated)
@@ -84,9 +91,11 @@ class GameState:
         if t <= 2 and random.randint(1, 100) < 101:
             randX, randY = self.uniqueGen(generated)
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
+            '''
             while(not placeAble):
                 randX ,randY = self.uniqueGen(generated)
                 placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
+            '''
             self.world.placeEntity(randX,randY,Entities.Torch(1))
             generated.append((randX,randY))
             print(generated)
@@ -94,10 +103,12 @@ class GameState:
         # Place Shoes
         if s <= 2 and random.randint(1, 100) < 101:
             randX, randY = self.uniqueGen(generated)
+            '''
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
             while(not placeAble):
                 randX ,randY = self.uniqueGen(generated)
                 placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
+            '''
             self.world.placeEntity(randX,randY,Entities.Shoes(-1))
             generated.append((randX,randY))
             print(generated)
@@ -105,10 +116,12 @@ class GameState:
         # Place Gems
         for _ in range(5): # Places 5 Gems
             randX, randY = self.uniqueGen(generated)
+            '''
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
             while(not placeAble):
                 randX ,randY = self.uniqueGen(generated)
                 placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
+            '''
             self.world.placeEntity(randX,randY,Entities.Gem(100))
             generated.append((randX,randY))
             print(generated)

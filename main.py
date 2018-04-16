@@ -13,11 +13,11 @@ class Point:
 
 def main():
     game = GameState.GameState()
-    debug = True
+    debug = False
 
     while game.hero.isAlive:
         game.floor += 1
-        game.world.createMap(14,14)
+        game.world.createMap(40,40)
         game.populate()
         game.changecolorpalette()
         screen = Screen.open()
