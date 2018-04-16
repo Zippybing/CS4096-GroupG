@@ -8,6 +8,9 @@ import time
 import Turns as turns
 from asciimatics.screen import *
 from asciimatics.scene import Scene
+from asciimatics.widgets import Frame
+from asciimatics.screen import Screen
+import copy
 class Point:
     def __init__(self, x, y):
         self.x = x
@@ -15,11 +18,20 @@ class Point:
 
 
 def preinit():
+    
     screen = Screen.open()
+    junk = Frame(screen,
+                                        screen.height * 2 // 3,
+                                        screen.width * 2 // 3,
+                                        hover_focus=True,
+                                        has_border=True,
+                                        title="Game Settings",
+                                        reduce_cpu=False)
+    oldpalette = copy.deepcopy(junk.palette)
     Scenes = []
     debug = [True]
     game = []
-    data = MainMenu(game,screen,debug)
+    data = MainMenu(game,screen,debug,oldpalette)
 
 
 """ def main(game,debug):

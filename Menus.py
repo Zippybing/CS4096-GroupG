@@ -3,7 +3,7 @@
 
 import asciimatics
 from asciimatics.widgets import Frame, ListBox, Layout, Divider, Text, \
-    Button, TextBox, Widget, CheckBox
+    Button, TextBox, Widget, CheckBox,Label
 from asciimatics.scene import Scene
 from asciimatics.screen import Screen
 from asciimatics.exceptions import ResizeScreenError, NextScene, StopApplication
@@ -15,20 +15,24 @@ import visual
 import GameState
 import sys
 import random
+import copy
 
-def MainMenu(game,screen,debug):
+def MainMenu(game,screen,debug,oldpalette):
+    
     def endmenu():
         debug[0] = False
         game = GameState.GameState()
         Mmenu.save()
         looksy = Mmenu.data
-        game.seed = int(str(looksy['seedval']))
+        if looksy['seedval'] != "":
+            game.seed = int(str(looksy['seedval']))
         random.seed(game.seed)
-        game.name = str(looksy['nameval'])
+        if looksy['nameval'] != "":
+            game.name = str(looksy['nameval'])
         debug[0] = looksy['Debug']
         #visual.blackout(screen)
         main(game,debug,looksy,screen)
-        DeathMenu(game,screen,debug)
+        DeathMenu(game,screen,debug,oldpalette)
         return Mmenu.data
     
 
@@ -41,6 +45,8 @@ def MainMenu(game,screen,debug):
                                         title="Game Settings",
                                         reduce_cpu=False)
 
+    #Mmenu.palette['background'] = (0,0,1)
+    Mmenu.palette = oldpalette
     mapping = Layout([100], fill_frame=True)
 
     Mmenu.add_layout(mapping)
@@ -65,14 +71,15 @@ def MainMenu(game,screen,debug):
     return Mmenu.data
 
 
-def DeathMenu(game,screen,debug):
+def DeathMenu(game,screen,debug,oldpalette):
     None
     def endgame():
         screen.close()
+        quit()
         sys.exit(0)
         None
     def Restart():
-        MainMenu(game,screen,debug)
+        MainMenu(game,screen,debug,oldpalette)
         None
     Dmenu = Frame(screen,
                                         screen.height * 2 // 3,
@@ -83,13 +90,20 @@ def DeathMenu(game,screen,debug):
                                         reduce_cpu=False)
 
     mapping = Layout([100], fill_frame=True)
-
+    
+    for entry in Dmenu.palette:
+        if entry != "focus_button":
+            Dmenu.palette[entry] = (1,1,1)
+        else:
+            Dmenu.palette[entry] = (0,1,5)
     Dmenu.add_layout(mapping)
+    mapping.add_widget(Label(str("Your Final Score Is:  "+str(game.score)),1))
     bottomrow = Layout([1, 1, 1, 1])
     Dmenu.add_layout(bottomrow)
     bottomrow.add_widget(Button("Exit",endgame),1)
     bottomrow.add_widget(Button("Restart",Restart),3)
     Dmenu.fix()
+    
 
     #return Mmenu
     #Mmenu._on_pic
