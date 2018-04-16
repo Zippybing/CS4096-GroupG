@@ -161,7 +161,7 @@ class WorldGrid:
                             print("YOU DIED")
                             target.isAlive = False
                             self.moveEntity(x1, y1, x2, y2, agent, None)
-                        else:
+                        elif type(target) != Entities.Wall:
                             self.moveEntity(x1, y1, x2, y2, agent, target)
             else:
                 self.moveEntity(x1, y1, x2, y2, agent, target)
