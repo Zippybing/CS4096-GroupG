@@ -47,12 +47,12 @@ def showmaphero(game, screen,debug):
                     bg=0)
         # User keypress display -- DEBUGGING PURPOSES ONLY
         screen.refresh()
+        dump_keypresses(screen)
         while True:
             keyboardinput = get_keypress_from_screen(screen)
             if keyboardinput != "":
                 screen.print_at(keyboardinput, 0, 0) # prints out user keyboard input
                 break
-            time.sleep(0.25)
 
         screen.refresh()
         
@@ -134,3 +134,16 @@ def get_keypress_from_screen(screen):
     # If input does not exist, send back nothing
     else:
         return ""
+
+'''
+    Function: dump_keypresses(screen)
+    Description: Removes all keypresses entered prior to Hero's turn
+'''
+def dump_keypresses(screen):
+    # Get the initial keypress
+    keypress = screen.get_event()
+    # Continue getting/popping keypresses from queue until no more remain
+    # i.e. get_event() returns a 'None' instead of a 'KeyBoardEvent'
+    while keypress != None:
+        keypress = screen.get_event()
+    return
