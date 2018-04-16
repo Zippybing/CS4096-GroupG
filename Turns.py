@@ -55,27 +55,35 @@ def monsterTurn(game,monster,debug):
     actions = 0
     direction = randint(0,3)
     maxNoise = -1
+    #TOP-LEFT
     if game.world.grid[monster.x-1][monster.y-1].noise > maxNoise:
         maxNoise = game.world.grid[monster.x-1][monster.y-1].noise
         direction = choice([0,1])
+    #TOP-RIGHT
     if game.world.grid[monster.x+1][monster.y-1].noise > maxNoise:
         maxNoise = game.world.grid[monster.x+1][monster.y-1].noise
         direction = choice([0,3])
+    #BOT-RIGHTS
     if game.world.grid[monster.x+1][monster.y+1].noise > maxNoise:
         maxNoise = game.world.grid[monster.x+1][monster.y+1].noise
         direction = choice([2,3])
+    #BOT-LEFT
     if game.world.grid[monster.x-1][monster.y+1].noise > maxNoise:
         maxNoise = game.world.grid[monster.x-1][monster.y+1].noise
         direction = choice([1,2])
+    #UP
     if game.world.grid[monster.x][monster.y-1].noise > maxNoise:
         maxNoise = game.world.grid[monster.x][monster.y-1].noise
         direction = 0
+    #RIGHT
     if game.world.grid[monster.x+1][monster.y].noise > maxNoise:
         maxNoise = game.world.grid[monster.x+1][monster.y].noise
         direction = 3
+    #DOWN
     if game.world.grid[monster.x][monster.y+1].noise > maxNoise:
         maxNoise = game.world.grid[monster.x][monster.y+1].noise
         direction = 2
+    #LEFT
     if game.world.grid[monster.x-1][monster.y].noise > maxNoise:
         maxNoise = game.world.grid[monster.x-1][monster.y].noise
         direction = 1
