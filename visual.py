@@ -52,6 +52,7 @@ def showmaphero(game, screen,debug):
             if keyboardinput != "":
                 screen.print_at(keyboardinput, 0, 0) # prints out user keyboard input
                 break
+            time.sleep(0.25)
 
         screen.refresh()
         
@@ -66,44 +67,46 @@ def showmapmon(game, screen,debug):
     counter = 0
     #input('Give input: ').upper()
 
-    actions = game.monster.actionCap
-    while actions > 0 and game.checkActive():
-        scoreboard = "Score: "+str(game.score)+ "              "  + "Floor: "+str(game.floor) +"              "+"Actions Remaining: "+str(actions)
-        linecounter = 0
-        colortracker = 0
-        #for row in mastergrid:
-        # Title bar
-        screen.print_at(game.level,
-                int(screen.width/2) - int(len(game.level)/2), 1,
-                    colour=7,
-                    bg=0)
-        # Map grid
-        for row in game.world.vizgrid[0]:
-            # screen.print_at(row,
-            #                 0, counter,
-            #                 colour=randint(0, screen.colours - 1),
-            #                 bg=randint(0, screen.colours - 1))
+    for i in range(len(game.monsters)):
+        monster = game.monsters[i]
+        actions = monster.actionCap
+        while actions > 0 and game.checkActive():
+            scoreboard = "Score: "+str(game.score)+ "              "  + "Floor: "+str(game.floor) +"              "+"Actions Remaining: "+str(actions)
+            linecounter = 0
+            colortracker = 0
+            #for row in mastergrid:
+            # Title bar
+            screen.print_at(game.level,
+                    int(screen.width/2) - int(len(game.level)/2), 1,
+                        colour=7,
+                        bg=0)
+            # Map grid
+            for row in game.world.vizgrid[0]:
+                # screen.print_at(row,
+                #                 0, counter,
+                #                 colour=randint(0, screen.colours - 1),
+                #                 bg=randint(0, screen.colours - 1))
 
-            screen.paint(row,
-                        int(screen.width/2)-int(game.world.width*3/2),(int(screen.height/4)+linecounter-4),
-                        7,2,0,
-                        colour_map=game.world.vizgrid[1][colortracker])
+                screen.paint(row,
+                            int(screen.width/2)-int(game.world.width*3/2),(int(screen.height/4)+linecounter-4),
+                            7,2,0,
+                            colour_map=game.world.vizgrid[1][colortracker])
 
-            linecounter+= 1
-            colortracker+=1
-            #ev = screen.get_key()
-        
-        # Scoreboard
-        screen.print_at(scoreboard,
-                int(screen.width/2) - int(len(scoreboard)/2), (int(screen.height)-1),
-                    colour=7,
-                    bg=0)
+                linecounter+= 1
+                colortracker+=1
+                #ev = screen.get_key()
+            
+            # Scoreboard
+            screen.print_at(scoreboard,
+                    int(screen.width/2) - int(len(scoreboard)/2), (int(screen.height)-1),
+                        colour=7,
+                        bg=0)
+            screen.refresh()
+            
+            actions += Turns.monsterTurn(game,monster,debug)
+
+            time.sleep(.25)
         screen.refresh()
-        
-        actions += Turns.monsterTurn(game,debug)
-
-        time.sleep(.25)
-    screen.refresh()
 
 '''
     Function: get_keypress_from_screen(screen)

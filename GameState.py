@@ -6,6 +6,7 @@
 import WorldGrid
 import Entities
 import random
+import math
 
 class GameState:
     def __init__(self):
@@ -15,7 +16,7 @@ class GameState:
         self.world = WorldGrid.WorldGrid(self) #is a worldgrid object
         self.seed = 12345    #will have a random seed that is used to generate the worlds in a deterministic way
         self.hero = Entities.Hero(0,4,'DEFAULT_HERO')
-        self.monster = Entities.Monster(5,'DEFAULT_MONSTER')
+        self.monsters = []
         self.exit = Entities.Exit()
     
 
@@ -25,6 +26,7 @@ class GameState:
     def populate(self):
         self.hero.hasEscaped = False
         generated = []
+        numberOfMonsters = self.calculateMonsterQuantity()
         
         # Place Exit
         randX ,randY = self.uniqueGen(generated)
@@ -40,15 +42,18 @@ class GameState:
         self.world.placeEntity(randX,randY,self.hero)
         generated.append((self.hero.x,self.hero.y))
         
-        # Place Monster
-        randX, randY = self.uniqueGen(generated)
-        placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
-        while(not placeAble):
-            randX ,randY = self.uniqueGen(generated)
+        # Place Monster(s)
+        self.monsters.clear() # Clear the list of monsters from previous levels
+        for i in range(numberOfMonsters): 
+            randX, randY = self.uniqueGen(generated)
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
-        self.world.placeEntity(randX,randY,self.monster)
-        generated.append((self.monster.x,self.monster.y))
-        print(generated)
+            while(not placeAble):
+                randX ,randY = self.uniqueGen(generated)
+                placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
+            self.monsters.append(Entities.Monster(5,'DEFAULT_MONSTER'))
+            self.world.placeEntity(randX,randY,self.monsters[i])
+            generated.append((self.monsters[i].x,self.monsters[i].y))
+            print(generated)
         
         # Place Items
         # Generate Non-Gem Items
@@ -107,8 +112,6 @@ class GameState:
             self.world.placeEntity(randX,randY,Entities.Gem(100))
             generated.append((randX,randY))
             print(generated)
-       
-        print(self.iDFS((self.hero.x,self.hero.y),(self.monster.x,self.monster.y)))
 
     def uniqueGen(self, generated):
         randX = random.randint(1, self.world.width-2)
@@ -196,4 +199,12 @@ class GameState:
                             piece.rep[0] = ( 4,piece.rep[0][1] ,(2+self.floor+val)%7)
                     
         
-        
+    def calculateMonsterQuantity(self):
+        n = 5 # Increase number of monsters spawned every 'n' number of levels
+        monstersMax = 5
+        monsters = math.ceil(self.floor / n) # Number of monsters to spawn in level
+        if monsters < 1:
+            monsters = 1 # Don't allow game to not spawn any monsters
+        elif monsters > monstersMax:
+            monsters = monstersMax # Don't allow game to flood level with monsters
+        return monsters
