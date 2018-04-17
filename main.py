@@ -38,10 +38,13 @@ def preinit():
     None
     
     
+def main():
+    game = GameState.GameState()
+    debug = False
 
     while game.hero.isAlive:
         game.floor += 1
-        game.world.createMap(24,24)
+        game.world.createMap(40,40)
         game.populate()
         game.changecolorpalette()
         screen = Screen.open()
@@ -66,7 +69,7 @@ def preinit():
                     elif item.icon == 'S':
                         game.hero.noise += item.noiseMod
                     item.applied = True
-            # Monster Turn
+            # Monster(s) Turn
             visual.showmapmon(game, screen,debug)
             # Noise Cleanup and other Cleanup
             game.world.clearNoises()

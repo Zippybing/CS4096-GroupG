@@ -6,6 +6,7 @@
 import WorldGrid
 import Entities
 import random
+import math
 
 class GameState:
     def __init__(self):
@@ -16,32 +17,26 @@ class GameState:
         self.level = "Robbing The Three Little Bears Of Everything, Revengeance..." #random seed for genration or actual name
         self.world = WorldGrid.WorldGrid(self) #is a worldgrid object
         self.hero = Entities.Hero(0,4,'DEFAULT_HERO')
-        self.monster = Entities.Monster(5,'DEFAULT_MONSTER')
+        self.monsters = []
         self.exit = Entities.Exit()
     
 
     def checkActive(self):
         return self.hero.isAlive and not self.hero.hasEscaped
-        
-    # def populate(self):
-    #     self.hero.hasEscaped = False
-        
-    #     self.world.placeEntity(4,5,Entities.Exit())
-    #     self.world.placeEntity(5,4,self.hero)
-    #     self.world.placeEntity(4,3,self.monster)
-        
-    #     # self.world.placeEntity(3,4,Entities.Key())
-        # self.world.placeEntity(5,5,Entities.Gem(100))
-        # self.world.placeEntity(7,3,Entities.Shoes(-1))
-        # self.world.placeEntity(10,3,Entities.Potion(1))
-        # self.world.placeEntity(7,4,Entities.Torch(1))
 
     def populate(self):
         self.hero.hasEscaped = False
         generated = []
+        numberOfMonsters = self.calculateMonsterQuantity()
+        
+        self.monsters.clear() 
+        for i in range(numberOfMonsters): 
+            self.monsters.append(Entities.Monster(4,'DEFAULT_MONSTER'))
         
         # Place Exit
         randX ,randY = self.uniqueGen(generated)
+        while self.world.grid[randX][randY].entity is not None:
+            randX ,randY = self.uniqueGen(generated)
         self.world.placeEntity(randX,randY,self.exit)
         generated.append((self.exit.x,self.exit.y))
 
@@ -54,15 +49,17 @@ class GameState:
         self.world.placeEntity(randX,randY,self.hero)
         generated.append((self.hero.x,self.hero.y))
         
-        # Place Monster
-        randX, randY = self.uniqueGen(generated)
-        placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
-        while(not placeAble):
-            randX ,randY = self.uniqueGen(generated)
+        # Place Monster(s)
+        # Clear the list of monsters from previous levels
+        for i in range(numberOfMonsters): 
+            randX, randY = self.uniqueGen(generated)
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
-        self.world.placeEntity(randX,randY,self.monster)
-        generated.append((self.monster.x,self.monster.y))
-        print(generated)
+            while(not placeAble):
+                randX ,randY = self.uniqueGen(generated)
+                placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
+            self.world.placeEntity(randX,randY,self.monsters[i])
+            generated.append((self.monsters[i].x,self.monsters[i].y))
+            print(generated)
         
         # Place Items
         # Generate Non-Gem Items
@@ -79,34 +76,40 @@ class GameState:
                 s += 1
 
         # Place Potions
-        if p < 2 and random.randint(1, 100) < 10:
+        if p <= 2 and random.randint(1, 100) < 101:
             randX, randY = self.uniqueGen(generated)
+            '''
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
             while(not placeAble):
                 randX ,randY = self.uniqueGen(generated)
                 placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
+            '''
             self.world.placeEntity(randX,randY,Entities.Potion(1))
             generated.append((randX,randY))
             print(generated)
 
         # Place Torches
-        if t < 2 and random.randint(1, 100) < 10:
+        if t <= 2 and random.randint(1, 100) < 101:
             randX, randY = self.uniqueGen(generated)
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
+            '''
             while(not placeAble):
                 randX ,randY = self.uniqueGen(generated)
                 placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
+            '''
             self.world.placeEntity(randX,randY,Entities.Torch(1))
             generated.append((randX,randY))
             print(generated)
 
         # Place Shoes
-        if s < 2 and random.randint(1, 100) < 10:
+        if s <= 2 and random.randint(1, 100) < 101:
             randX, randY = self.uniqueGen(generated)
+            '''
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
             while(not placeAble):
                 randX ,randY = self.uniqueGen(generated)
                 placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
+            '''
             self.world.placeEntity(randX,randY,Entities.Shoes(-1))
             generated.append((randX,randY))
             print(generated)
@@ -114,22 +117,15 @@ class GameState:
         # Place Gems
         for _ in range(5): # Places 5 Gems
             randX, randY = self.uniqueGen(generated)
+            '''
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
             while(not placeAble):
                 randX ,randY = self.uniqueGen(generated)
                 placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
+            '''
             self.world.placeEntity(randX,randY,Entities.Gem(100))
             generated.append((randX,randY))
             print(generated)
-
-        '''
-        self.world.placeEntity(5,5,Entities.Gem(100))
-        self.world.placeEntity(7,3,Entities.Shoes(-1))
-        self.world.placeEntity(10,3,Entities.Potion(1))
-        self.world.placeEntity(7,4,Entities.Torch(1))
-        '''
-       
-        print(self.iDFS((self.hero.x,self.hero.y),(self.monster.x,self.monster.y)))
 
     def uniqueGen(self, generated):
         randX = random.randint(1, self.world.width-2)
@@ -217,4 +213,12 @@ class GameState:
                             piece.rep[0] = ( 4,piece.rep[0][1] ,(2+self.floor+val)%7)
                     
         
-        
+    def calculateMonsterQuantity(self):
+        n = 5 # Increase number of monsters spawned every 'n' number of levels
+        monstersMax = 5
+        monsters = math.ceil(self.floor / n) # Number of monsters to spawn in level
+        if monsters < 1:
+            monsters = 1 # Don't allow game to not spawn any monsters
+        elif monsters > monstersMax:
+            monsters = monstersMax # Don't allow game to flood level with monsters
+        return monsters
