@@ -18,7 +18,7 @@ def main(game,debug,menudata,screen):
 
     while game.hero.isAlive:
         game.floor += 1
-        game.world.createMap(24,24)
+        game.world.createMap(40,40)
         game.populate()
         game.changecolorpalette()
         #screen = Screen.open()

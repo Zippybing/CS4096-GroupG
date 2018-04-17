@@ -73,7 +73,7 @@ def showmapmon(game, screen,debug):
         actions = monster.actionCap
         while actions > 0 and game.checkActive():
             scoreboard = ("Score: "+str(game.score)+ "              "  + "Floor: "+str(game.floor) +"              "+"Actions Remaining: "+str(actions)
-                        +"       "+"Seed: "+str(game.seed))              "+"Actions Remaining: "+str(actions)
+                        +"       "+"Seed: "+str(game.seed))
             linecounter = 0
             colortracker = 0
             #for row in mastergrid:
