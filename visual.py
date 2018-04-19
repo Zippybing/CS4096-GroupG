@@ -8,11 +8,12 @@ from asciimatics.screen import *
 tmp = "YES\nYES\nYES"
 
 def showmaphero(game, screen,debug):
-    scoreboard = "Score: "+str(game.score)+ "              "  + "Floor: "+str(game.floor)
+    
     counter = 0
 
     actions = game.hero.actionCap
     while actions > 0 and game.checkActive():
+        scoreboard = "Score: "+str(game.score)+ "              "  + "Floor: "+str(game.floor) +"              "+"Actions Remaining: "+str(actions)
         linecounter = 0
         colortracker = 0
 
@@ -46,6 +47,7 @@ def showmaphero(game, screen,debug):
                     bg=0)
         # User keypress display -- DEBUGGING PURPOSES ONLY
         screen.refresh()
+        dump_keypresses(screen)
         while True:
             keyboardinput = get_keypress_from_screen(screen)
             if keyboardinput != "":
@@ -62,47 +64,49 @@ def showmaphero(game, screen,debug):
         #userInput = input('Give input: ').upper()
 
 def showmapmon(game, screen,debug):
-    scoreboard = "Score: "+str(game.score)+ "              "  + "Floor: "+str(game.floor)
     counter = 0
     #input('Give input: ').upper()
 
-    actions = game.monster.actionCap
-    while actions > 0 and game.checkActive():
-        linecounter = 0
-        colortracker = 0
-        #for row in mastergrid:
-        # Title bar
-        screen.print_at(game.level,
-                int(screen.width/2) - int(len(game.level)/2), 1,
-                    colour=7,
-                    bg=0)
-        # Map grid
-        for row in game.world.vizgrid[0]:
-            # screen.print_at(row,
-            #                 0, counter,
-            #                 colour=randint(0, screen.colours - 1),
-            #                 bg=randint(0, screen.colours - 1))
+    for i in range(len(game.monsters)):
+        monster = game.monsters[i]
+        actions = monster.actionCap
+        while actions > 0 and game.checkActive():
+            scoreboard = "Score: "+str(game.score)+ "              "  + "Floor: "+str(game.floor) +"              "+"Actions Remaining: "+str(actions)
+            linecounter = 0
+            colortracker = 0
+            #for row in mastergrid:
+            # Title bar
+            screen.print_at(game.level,
+                    int(screen.width/2) - int(len(game.level)/2), 1,
+                        colour=7,
+                        bg=0)
+            # Map grid
+            for row in game.world.vizgrid[0]:
+                # screen.print_at(row,
+                #                 0, counter,
+                #                 colour=randint(0, screen.colours - 1),
+                #                 bg=randint(0, screen.colours - 1))
 
-            screen.paint(row,
-                        int(screen.width/2)-int(game.world.width*3/2),(int(screen.height/4)+linecounter-4),
-                        7,2,0,
-                        colour_map=game.world.vizgrid[1][colortracker])
+                screen.paint(row,
+                            int(screen.width/2)-int(game.world.width*3/2),(int(screen.height/4)+linecounter-4),
+                            7,2,0,
+                            colour_map=game.world.vizgrid[1][colortracker])
 
-            linecounter+= 1
-            colortracker+=1
-            #ev = screen.get_key()
-        
-        # Scoreboard
-        screen.print_at(scoreboard,
-                int(screen.width/2) - int(len(scoreboard)/2), (int(screen.height)-1),
-                    colour=7,
-                    bg=0)
+                linecounter+= 1
+                colortracker+=1
+                #ev = screen.get_key()
+            
+            # Scoreboard
+            screen.print_at(scoreboard,
+                    int(screen.width/2) - int(len(scoreboard)/2), (int(screen.height)-1),
+                        colour=7,
+                        bg=0)
+            screen.refresh()
+            
+            actions += Turns.monsterTurn(game,monster,debug)
+
+            time.sleep(.25)
         screen.refresh()
-        
-        actions += Turns.monsterTurn(game,debug)
-
-        time.sleep(.25)
-    screen.refresh()
 
 '''
     Function: get_keypress_from_screen(screen)
@@ -130,3 +134,16 @@ def get_keypress_from_screen(screen):
     # If input does not exist, send back nothing
     else:
         return ""
+
+'''
+    Function: dump_keypresses(screen)
+    Description: Removes all keypresses entered prior to Hero's turn
+'''
+def dump_keypresses(screen):
+    # Get the initial keypress
+    keypress = screen.get_event()
+    # Continue getting/popping keypresses from queue until no more remain
+    # i.e. get_event() returns a 'None' instead of a 'KeyBoardEvent'
+    while keypress != None:
+        keypress = screen.get_event()
+    return
