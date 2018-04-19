@@ -13,14 +13,15 @@ def showmaphero(game, screen,debug):
 
     actions = game.hero.actionCap
     while actions > 0 and game.checkActive():
-        scoreboard = "Score: "+str(game.score)+ "              "  + "Floor: "+str(game.floor) +"              "+"Actions Remaining: "+str(actions)
+        scoreboard = ("Score: "+str(game.score)+ "              "  + "Floor: "+str(game.floor) +"              "+"Actions Remaining: "+str(actions)
+                        +"       "+"Seed: "+str(game.seed))
         linecounter = 0
         colortracker = 0
 
         
 
         # Title bar
-        screen.print_at(game.level,
+        screen.print_at(str(game.name+" is "+game.level),
                    int(screen.width/2) - int(len(game.level)/2), 1,
                     colour=7,
                     bg=0)
@@ -71,7 +72,8 @@ def showmapmon(game, screen,debug):
         monster = game.monsters[i]
         actions = monster.actionCap
         while actions > 0 and game.checkActive():
-            scoreboard = "Score: "+str(game.score)+ "              "  + "Floor: "+str(game.floor) +"              "+"Actions Remaining: "+str(actions)
+            scoreboard = ("Score: "+str(game.score)+ "              "  + "Floor: "+str(game.floor) +"              "+"Actions Remaining: "+str(actions)
+                        +"       "+"Seed: "+str(game.seed))
             linecounter = 0
             colortracker = 0
             #for row in mastergrid:
@@ -135,6 +137,16 @@ def get_keypress_from_screen(screen):
     else:
         return ""
 
+
+def blackout(screen):
+    counter = 0
+    for row in range(screen.width):
+        for col in range(screen.height):
+            counter += 1
+            screen.print_at('                  ',
+                row,col,
+                    colour=0,
+                    bg=0)
 '''
     Function: dump_keypresses(screen)
     Description: Removes all keypresses entered prior to Hero's turn

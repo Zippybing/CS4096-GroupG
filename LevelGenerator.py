@@ -7,13 +7,13 @@ import sys
 import random
 
 # Seed random
-random.seed(123456789)
 
 # Proof of [x][y] concept -- 
 # is actually put into grid as [y=0][x=2], but print_grid displays as [x=0][y=2]
 # grid[0][2] = 1
 
 def create_level(grid_width, grid_height):
+
 	# Create a blank grid to give back to the WorldGrid createMap function
 	grid = [[0 for i in range(grid_height)] for j in range(grid_width)]
 
