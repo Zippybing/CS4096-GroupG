@@ -10,11 +10,12 @@ import math
 
 class GameState:
     def __init__(self):
+        self.seed = random.randint(0,765867586578)    #will have a random seed that is used to generate the worlds in a deterministic way
         self.score = 0
         self.floor = 0
+        self.name = "Solid Snake"
         self.level = "Robbing The Three Little Bears Of Everything, Revengeance..." #random seed for genration or actual name
         self.world = WorldGrid.WorldGrid(self) #is a worldgrid object
-        self.seed = 12345    #will have a random seed that is used to generate the worlds in a deterministic way
         self.hero = Entities.Hero(0,4,'DEFAULT_HERO')
         self.monsters = []
         self.exit = Entities.Exit()
