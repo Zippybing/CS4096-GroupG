@@ -1,4 +1,5 @@
 #Turns
+from Config import getValue
 from random import randint, choice
 
 def heroTurn(game, key,debug):
@@ -110,6 +111,7 @@ def monsterTurn(game,monster,debug):
     if debug[0]:
         game.world.displayGridnorm()
     else:
-        game.world.displayGridM()
+        pass
+        #game.world.displayGridM()
     return actions
         

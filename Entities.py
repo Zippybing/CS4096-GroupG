@@ -1,3 +1,6 @@
+from Config import getValue
+
+
 class Entity(object):
     def __init__(self):
         pass
@@ -23,7 +26,7 @@ class Fixture(Entity):
 
 '''Sub-Entities of Creature'''
 class Hero(Creature):
-    def __init__(self, direction, actionCap, name, inventory = []):
+    def __init__(self, actionCap, name, inventory = []):
         Creature.__init__(self, actionCap, name)
         self.icon = 'H'
         self.rep = [(7,2,2)]       
