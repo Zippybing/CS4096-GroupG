@@ -3,11 +3,13 @@
 import Turns
 from random import randint
 from time import sleep
+
+from Config import getValue
 from asciimatics.screen import *
 #from main import mastergrid
 tmp = "YES\nYES\nYES"
 
-def showmaphero(game, screen,debug):
+def showmaphero(game, screen, debug):
     
     counter = 0
 
@@ -58,13 +60,13 @@ def showmaphero(game, screen,debug):
         screen.refresh()
         
         
-        actions += Turns.heroTurn(game, keyboardinput,debug)
+        actions += Turns.heroTurn(game, keyboardinput, debug)
     screen.refresh()
     
 
         #userInput = input('Give input: ').upper()
 
-def showmapmon(game, screen,debug):
+def showmapmon(game, screen, debug):
     counter = 0
     #input('Give input: ').upper()
 

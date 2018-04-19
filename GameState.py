@@ -8,15 +8,18 @@ import Entities
 import random
 import math
 
+from Config import getValue
+
 class GameState:
     def __init__(self):
         self.seed = random.randint(0,765867586578)    #will have a random seed that is used to generate the worlds in a deterministic way
         self.score = 0
         self.floor = 0
         self.name = "Solid Snake"
-        self.level = "Robbing The Three Little Bears Of Everything, Revengeance..." #random seed for genration or actual name
+        self.level = getValue('GameState', 'level', 'str') #random seed for genration or actual name
         self.world = WorldGrid.WorldGrid(self) #is a worldgrid object
-        self.hero = Entities.Hero(0,4,'DEFAULT_HERO')
+        self.newseed = getValue('GameState', 'seed', 'int')    #will have a random seed that is used to generate the worlds in a deterministic way 
+        self.hero = Entities.Hero(getValue('Entities', 'heroMove', 'int'), getValue('Entities', 'heroName', 'str'))
         self.monsters = []
         self.exit = Entities.Exit()
     
@@ -31,7 +34,7 @@ class GameState:
         
         self.monsters.clear() 
         for i in range(numberOfMonsters): 
-            self.monsters.append(Entities.Monster(4,'DEFAULT_MONSTER'))
+            self.monsters.append(Entities.Monster(getValue('Entities', 'monsterMove', 'int'), getValue('Entities', 'monsterName', 'str')))
         
         # Place Exit
         randX ,randY = self.uniqueGen(generated)
@@ -64,7 +67,7 @@ class GameState:
         # Place Items
         # Generate Non-Gem Items
         p, t, s = 0, 0, 0
-        chance = 10 # Chance of item appearing on level (10%)
+        chance = getValue('GameState', 'chance', 'int') # Chance of item appearing on level (10%)
         
         # Count Instances of Item in Inventory
         for item in self.hero.inventory:
@@ -76,7 +79,7 @@ class GameState:
                 s += 1
 
         # Place Potions
-        if p <= 2 and random.randint(1, 100) < 101:
+        if p <= 2 and random.randint(1, 100) < chance:
             randX, randY = self.uniqueGen(generated)
             '''
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
@@ -84,12 +87,12 @@ class GameState:
                 randX ,randY = self.uniqueGen(generated)
                 placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
             '''
-            self.world.placeEntity(randX,randY,Entities.Potion(1))
+            self.world.placeEntity(randX,randY,Entities.Potion(getValue('Entities', 'potionMoveMod', 'int')))
             generated.append((randX,randY))
             print(generated)
 
         # Place Torches
-        if t <= 2 and random.randint(1, 100) < 101:
+        if t <= 2 and random.randint(1, 100) < chance: 
             randX, randY = self.uniqueGen(generated)
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
             '''
@@ -97,12 +100,12 @@ class GameState:
                 randX ,randY = self.uniqueGen(generated)
                 placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
             '''
-            self.world.placeEntity(randX,randY,Entities.Torch(1))
+            self.world.placeEntity(randX,randY,Entities.Torch(getValue('Entities', 'torchVisMod', 'int')))
             generated.append((randX,randY))
             print(generated)
 
         # Place Shoes
-        if s <= 2 and random.randint(1, 100) < 101:
+        if s <= 2 and random.randint(1, 100) < chance:
             randX, randY = self.uniqueGen(generated)
             '''
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
@@ -110,12 +113,12 @@ class GameState:
                 randX ,randY = self.uniqueGen(generated)
                 placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
             '''
-            self.world.placeEntity(randX,randY,Entities.Shoes(-1))
+            self.world.placeEntity(randX,randY,Entities.Shoes(getValue('Entities', 'shoeNoiseMod', 'int')))
             generated.append((randX,randY))
             print(generated)
 
         # Place Gems
-        for _ in range(5): # Places 5 Gems
+        for _ in range(getValue('Entities', 'gemNum', 'int')): # Places Gems
             randX, randY = self.uniqueGen(generated)
             '''
             placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
@@ -123,7 +126,7 @@ class GameState:
                 randX ,randY = self.uniqueGen(generated)
                 placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
             '''
-            self.world.placeEntity(randX,randY,Entities.Gem(100))
+            self.world.placeEntity(randX,randY,Entities.Gem(getValue('Entities', 'gemWorth', 'int')))
             generated.append((randX,randY))
             print(generated)
 
@@ -214,8 +217,8 @@ class GameState:
                     
         
     def calculateMonsterQuantity(self):
-        n = 5 # Increase number of monsters spawned every 'n' number of levels
-        monstersMax = 5
+        n = getValue('GameState', 'monstern', 'int') # Increase number of monsters spawned every 'n' number of levels 
+        monstersMax = getValue('GameState', 'monsterMax', 'int')
         monsters = math.ceil(self.floor / n) # Number of monsters to spawn in level
         if monsters < 1:
             monsters = 1 # Don't allow game to not spawn any monsters

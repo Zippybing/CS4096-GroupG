@@ -6,7 +6,10 @@
 import sys
 import random
 
+from Config import getValue
+
 # Seed random
+#random.seed(getValue('LevelGenerator', 'seed', 'int'))
 
 # Proof of [x][y] concept -- 
 # is actually put into grid as [y=0][x=2], but print_grid displays as [x=0][y=2]
@@ -20,11 +23,11 @@ def create_level(grid_width, grid_height):
 	# Initialize the grid by randomly filling it with wall tiles
 	# The first parameter is the % chance that a random cell becomes a tile
 	# recommended chance %: 35-39
-	initialize_grid(37, grid, grid_width, grid_height)
+	initialize_grid(getValue('LevelGenerator', 'genChance', 'int'), grid, grid_width, grid_height)
 
 	# Run the simulation steps
 	for i in range(7):
-		do_simulation_step(4, 3, grid, grid_width, grid_height)
+		do_simulation_step(getValue('LevelGenerator', 'birthLimit', 'int'), getValue('LevelGenerator', 'deathLimit', 'int'), grid, grid_width, grid_height)
 
 	# Fill the grid's edges with walls to prevent player exiting map's sides
 	fill_grid_walls(grid, grid_width, grid_height)

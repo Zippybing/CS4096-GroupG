@@ -6,6 +6,8 @@ import maingameloop
 import random
 import time
 import Turns as turns
+
+from Config import getValue
 from asciimatics.screen import *
 from asciimatics.scene import Scene
 from asciimatics.widgets import Frame
@@ -40,11 +42,11 @@ def preinit():
     
 def main():
     game = GameState.GameState()
-    debug = False
+    debug = getValue('Main', 'debug', 'bool')
 
     while game.hero.isAlive:
         game.floor += 1
-        game.world.createMap(40,40)
+        game.world.createMap(getValue('Main', 'gridWidth', 'int'), getValue('Main', 'gridHeight', 'int'))
         game.populate()
         game.changecolorpalette()
         screen = Screen.open()
@@ -56,7 +58,7 @@ def main():
                 game.world.displayGridH()
         
             #Hero Turn
-            visual.showmaphero(game, screen,debug)
+            visual.showmaphero(game, screen, debug)
             # Item Turn
             for item in game.hero.inventory:
                 if item.applied == False:
@@ -70,7 +72,7 @@ def main():
                         game.hero.noise += item.noiseMod
                     item.applied = True
             # Monster(s) Turn
-            visual.showmapmon(game, screen,debug)
+            visual.showmapmon(game, screen, debug)
             # Noise Cleanup and other Cleanup
             game.world.clearNoises()
        

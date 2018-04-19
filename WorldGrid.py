@@ -1,6 +1,8 @@
 import sys
 import Tile
 import Entities
+
+from Config import getValue
 from LevelGenerator import create_level
 
 class WorldGrid:
