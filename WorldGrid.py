@@ -145,12 +145,24 @@ class WorldGrid:
                             agent.inventory.append(target)
                             self.moveEntity(x1, y1, x2, y2, agent, None)
                         elif type(target) == Entities.Monster:
-                            # Kill Hero
-                            # Do not move
-                            print("YOU REALLY DIED")
-                            agent.isAlive = False
-                            self.placeEntity(x1,y1,None)
-                            return
+                            gun = None
+                            for item in agent.inventory:
+                                if type(item) == Entities.Shotgun and item.ammo == True:
+                                    gun = item
+                                    self.gamestate.score +=500
+                                    target.isAlive = False
+                                    gun.ammo = False
+                                    self.distributeNoise(x2,y2,9)
+                                    self.moveEntity(x1, y1, x2, y2, agent, None)
+                                    break
+                            if gun is None:
+                                # Kill Hero
+                                # Do not move
+                                print("YOU REALLY DIED")
+                                agent.isAlive = False
+                                self.placeEntity(x1,y1,None)
+                                self.gamestate.score +=500
+                                return
                         elif type(target) == Entities.Exit:
                             print("YOU ESCAPED THE LEVEL")
                             agent.hasEscaped = True
@@ -163,6 +175,7 @@ class WorldGrid:
                             print("YOU DIED")
                             target.isAlive = False
                             self.moveEntity(x1, y1, x2, y2, agent, None)
+                            self.gamestate.score -=1000
                         elif type(target) != Entities.Wall:
                             self.moveEntity(x1, y1, x2, y2, agent, target)
             else:

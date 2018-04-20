@@ -29,6 +29,11 @@ class GameState:
 
     def populate(self):
         self.hero.hasEscaped = False
+        for item in self.hero.inventory:
+            if type(item) == Entities.Shotgun:
+                item.ammo = True
+                break
+                                    
         generated = []
         numberOfMonsters = self.calculateMonsterQuantity()
         
@@ -66,7 +71,7 @@ class GameState:
         
         # Place Items
         # Generate Non-Gem Items
-        p, t, s = 0, 0, 0
+        p, t, s, u = 0, 0, 0, 0
         chance = getValue('GameState', 'chance', 'int') # Chance of item appearing on level (10%)
         
         # Count Instances of Item in Inventory
@@ -77,16 +82,17 @@ class GameState:
                 t += 1
             elif item.icon == 'S':
                 s += 1
+            elif item.icon == 'U':
+                u += 1
+
 
         # Place Potions
         if p <= 2 and random.randint(1, 100) < chance:
             randX, randY = self.uniqueGen(generated)
-            '''
-            placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
+            placeAble = type(self.world.grid[randX][randY].entity) != Entities.Wall
             while(not placeAble):
                 randX ,randY = self.uniqueGen(generated)
-                placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
-            '''
+                placeAble = type(self.world.grid[randX][randY].entity) != Entities.Wall
             self.world.placeEntity(randX,randY,Entities.Potion(getValue('Entities', 'potionMoveMod', 'int')))
             generated.append((randX,randY))
             print(generated)
@@ -94,12 +100,10 @@ class GameState:
         # Place Torches
         if t <= 2 and random.randint(1, 100) < chance: 
             randX, randY = self.uniqueGen(generated)
-            placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
-            '''
+            placeAble = type(self.world.grid[randX][randY].entity) != Entities.Wall
             while(not placeAble):
                 randX ,randY = self.uniqueGen(generated)
-                placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
-            '''
+                placeAble = type(self.world.grid[randX][randY].entity) != Entities.Wall
             self.world.placeEntity(randX,randY,Entities.Torch(getValue('Entities', 'torchVisMod', 'int')))
             generated.append((randX,randY))
             print(generated)
@@ -107,25 +111,32 @@ class GameState:
         # Place Shoes
         if s <= 2 and random.randint(1, 100) < chance:
             randX, randY = self.uniqueGen(generated)
-            '''
-            placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
+            placeAble = type(self.world.grid[randX][randY].entity) != Entities.Wall
             while(not placeAble):
                 randX ,randY = self.uniqueGen(generated)
-                placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
-            '''
+                placeAble = type(self.world.grid[randX][randY].entity) != Entities.Wall
             self.world.placeEntity(randX,randY,Entities.Shoes(getValue('Entities', 'shoeNoiseMod', 'int')))
+            generated.append((randX,randY))
+            print(generated)
+            
+        # Place Shotgun
+        if u <= 1 and random.randint(1, 100) < 101:
+            randX, randY = self.uniqueGen(generated)
+            placeAble = type(self.world.grid[randX][randY].entity) != Entities.Wall
+            while(not placeAble):
+                randX ,randY = self.uniqueGen(generated)
+                placeAble = type(self.world.grid[randX][randY].entity) != Entities.Wall
+            self.world.placeEntity(randX,randY,Entities.Shotgun())
             generated.append((randX,randY))
             print(generated)
 
         # Place Gems
         for _ in range(getValue('Entities', 'gemNum', 'int')): # Places Gems
             randX, randY = self.uniqueGen(generated)
-            '''
-            placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
+            placeAble = type(self.world.grid[randX][randY].entity) != Entities.Wall
             while(not placeAble):
                 randX ,randY = self.uniqueGen(generated)
-                placeAble = self.iDFS((randX,randY),(self.hero.x,self.hero.y))
-            '''
+                placeAble = type(self.world.grid[randX][randY].entity) != Entities.Wall
             self.world.placeEntity(randX,randY,Entities.Gem(getValue('Entities', 'gemWorth', 'int')))
             generated.append((randX,randY))
             print(generated)
@@ -224,4 +235,4 @@ class GameState:
             monsters = 1 # Don't allow game to not spawn any monsters
         elif monsters > monstersMax:
             monsters = monstersMax # Don't allow game to flood level with monsters
-        return monsters
+        return monsters+1

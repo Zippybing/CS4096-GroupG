@@ -109,7 +109,7 @@ def monsterTurn(game,monster,debug):
         game.world.tryMoveEntity(monster.x,monster.y,monster.x+1,monster.y)
         actions -= 1
     if debug[0]:
-        game.world.displayGridnorm()
+        game.world.displayGridM()
     else:
         pass
         #game.world.displayGridM()
