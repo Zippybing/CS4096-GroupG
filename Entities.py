@@ -12,6 +12,7 @@ class Creature(Entity):
         Entity.__init__(self)
         self.actionCap = actionCap
         self.name = name
+        self.isAlive = True
 
 class Item(Entity):
     def __init__(self):
@@ -31,7 +32,6 @@ class Hero(Creature):
         self.icon = 'H'
         self.rep = [(7,2,2)]       
         self.hasEscaped = False
-        self.isAlive = True
         self.inventory = inventory
         self.noise = 5
         self.visual = 4
@@ -89,6 +89,14 @@ class Shoes(Item):
         Item.__init__(self)
         self.rep = [(5,4,2)]
         self.noiseMod = noiseMod
+        
+class Shotgun(Item):
+    def __init__(self):
+        self.icon = 'U'
+        self.name = 'SuperShotgun'
+        Item.__init__(self)
+        self.rep = [(5,4,2)]
+        self.ammo = True
 
 # Non Functional Items, Do Not Use
 class Rock(Item):

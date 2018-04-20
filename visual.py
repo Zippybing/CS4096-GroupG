@@ -70,10 +70,9 @@ def showmapmon(game, screen, debug):
     counter = 0
     #input('Give input: ').upper()
 
-    for i in range(len(game.monsters)):
-        monster = game.monsters[i]
+    for monster in game.monsters:
         actions = monster.actionCap
-        while actions > 0 and game.checkActive():
+        while actions > 0 and game.checkActive() and monster.isAlive:
             scoreboard = ("Score: "+str(game.score)+ "              "  + "Floor: "+str(game.floor) +"              "+"Actions Remaining: "+str(actions)
                         +"       "+"Seed: "+str(game.seed))
             linecounter = 0
