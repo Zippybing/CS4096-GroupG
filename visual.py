@@ -3,6 +3,8 @@
 import Turns
 from random import randint
 from time import sleep
+import Config
+import Entities
 
 from Config import getValue
 from asciimatics.screen import *
@@ -50,6 +52,9 @@ def showmaphero(game, screen, debug):
                     bg=0)
         # User keypress display -- DEBUGGING PURPOSES ONLY
         screen.refresh()
+        
+        dumpTxt_Hero(game,actions)
+        
         dump_keypresses(screen)
         while True:
             keyboardinput = get_keypress_from_screen(screen)
@@ -58,7 +63,6 @@ def showmaphero(game, screen, debug):
                 break
 
         screen.refresh()
-        
         
         actions += Turns.heroTurn(game, keyboardinput, debug)
     screen.refresh()
@@ -106,9 +110,10 @@ def showmapmon(game, screen, debug):
                         bg=0)
             screen.refresh()
             
+            dumpTxt_Monster(game,actions)
             actions += Turns.monsterTurn(game,monster,debug)
 
-            time.sleep(.25)
+            time.sleep(.1)
         screen.refresh()
 
 '''
@@ -160,3 +165,38 @@ def dump_keypresses(screen):
     while keypress != None:
         keypress = screen.get_event()
     return
+    
+def dumpTxt_Hero(game, actions):
+    filename = Config.getValue('visual', 'heroDumpFile', 'string')
+    with open(filename, 'w') as heroDump:
+        heroDump.write('Score: ' + str(game.score) + '\n')
+        heroDump.write('Floor: ' + str(game.floor) + '\n')
+        heroDump.write('Actions: ' + str(actions) + '\n')
+        
+        for y in range(len(game.world.grid[0])):
+            rowtext = ""
+            for x in range(len(game.world.grid)):
+                rowtext += ' '+game.world.grid[x][y].print_icon()+' '
+            heroDump.write(rowtext + '\n')
+        
+        heroDump.write('\n')
+        
+def dumpTxt_Monster(game, actions):
+    filename = Config.getValue('visual', 'monsterDumpFile', 'string')
+    with open(filename, 'w') as heroDump:
+        heroDump.write('Score: ' + str(game.score) + '\n')
+        heroDump.write('Floor: ' + str(game.floor) + '\n')
+        heroDump.write('Actions: ' + str(actions) + '\n')
+        
+        for y in range(len(game.world.grid[0])):
+            rowtext = ""
+            for x in range(len(game.world.grid)):
+                if type(game.world.grid[x][y].entity) == Entities.Monster:
+                    rowtext += ' '+str(game.world.grid[x][y].print_icon())+' '
+                elif type(game.world.grid[x][y].entity) == Entities.Wall:
+                    rowtext += ' '+str(game.world.grid[x][y].print_icon())+' '
+                else:
+                    rowtext += ' '+str(game.world.grid[x][y].noise)+' '
+            heroDump.write(rowtext + '\n')
+        
+        heroDump.write('\n')
