@@ -17,7 +17,7 @@ def intro(screen):
         screen.refresh()
     #screen.paint(tmp.rendered_text,10,15)
     None
-    time.sleep(5)
+    time.sleep(1)
 
 
 

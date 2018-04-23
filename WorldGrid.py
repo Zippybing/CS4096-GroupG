@@ -139,7 +139,7 @@ class WorldGrid:
                         if issubclass(type(target),Entities.Item):
                             # print("Picked up item!") # Temporarily removed. Causes problems w/ Mac.
                             # Add item to inventory
-                            agent.addToInventory(target)
+                            #agent.addToInventory(target)
                             # agent.printInventory() # BREAKS SCREEN RENDERING LOOP
                             # Move hero to space
                             agent.inventory.append(target)

@@ -25,7 +25,9 @@ def main(game,debug,menudata,screen):
         visual.blackout(screen)
         while game.checkActive():
             if debug[0]:
+                game.hero.actionCap = 60
                 game.world.displayGridnorm()
+
             else:
                 game.world.displayGridH()
             #Hero Turn
