@@ -58,9 +58,7 @@ def MainMenu(game,screen,debug,oldpalette):
     #Mmenu.palette['background'] = (0,0,1)
     Mmenu.palette = oldpalette
     mapping = Layout([100], fill_frame=True)
-
     Mmenu.add_layout(mapping)
-
     mapping.add_widget(Text("Seed:","seedval"))
     mapping.add_widget(Text("Adventurer Name:","nameval"))
     mapping.add_widget(CheckBox("Debug Mode:","Debug","Debug"))
@@ -70,8 +68,7 @@ def MainMenu(game,screen,debug,oldpalette):
     bottomrow.add_widget(Button("Exit Game",endgame),0)
     bottomrow.add_widget(Button("Start Level",endmenu),3)
     Mmenu.fix()
-
-    #return Mmenu
+    
     #Mmenu._on_pic
 
     Scenes = [
@@ -127,6 +124,18 @@ def DeathMenu(game,screen,debug,oldpalette):
     return Dmenu.data
 
 
+def IntroScreen(screen):
+    text = "The Revengnce of the Bears"
+    tmp = FigletText(text,"doom")
+    hcounter = 0
+    wcounter = 0
+    for row in tmp.rendered_text[0]:
+        #for char in row:
+        screen.paint(row,int((screen.width/2)-(tmp.max_width/2))+
+        wcounter,int(screen.height/2)-8+hcounter,)
+        wcounter += 0
+        hcounter += 1
+    None
 
 
 
