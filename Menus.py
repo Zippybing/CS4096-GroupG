@@ -31,9 +31,12 @@ def MainMenu(game,screen,debug,oldpalette):
         looksy = Mmenu.data
         if looksy['seedval'] != "":
             converted = 0
-            for char in looksy['seedval']:
-                converted += ord(char)
-            game.seed = int(converted)
+            if str.isnumeric(looksy['seedval']):
+                game.seed = int(looksy['seedval'])
+            else:
+                for char in looksy['seedval']:
+                    converted += ord(char)
+                game.seed = int(converted)
         random.seed(game.seed)
         if looksy['nameval'] != "":
             if len(looksy["nameval"]) >= 20:
