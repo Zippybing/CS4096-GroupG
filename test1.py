@@ -12,7 +12,7 @@ def intro(screen):
     for row in tmp.rendered_text[0]:
         #for char in row:
         screen.paint(row,int((screen.width/2)-(tmp.max_width/2))+
-        wcounter,int(screen.height/2)-8+hcounter)
+        wcounter,int(screen.height/2)-8+hcounter,6,1,0)
         wcounter += 0
         hcounter += 1
         screen.refresh()

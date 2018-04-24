@@ -27,6 +27,7 @@ def MainMenu(game,screen,debug,oldpalette):
     def endmenu():
         debug[0] = False
         game = GameState.GameState()
+        game.hero.inventory = []
         Mmenu.save()
         looksy = Mmenu.data
         if looksy['seedval'] != "":
@@ -92,6 +93,7 @@ def DeathMenu(game,screen,debug,oldpalette):
         sys.exit(0)
         None
     def Restart():
+        game = GameState.GameState()
         MainMenu(game,screen,debug,oldpalette)
         None
     Dmenu = Frame(screen,
