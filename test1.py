@@ -8,6 +8,7 @@ def intro(screen):
     tmp = FigletText(text,"doom")
     hcounter = 0
     wcounter = 0
+    colorp = []
     for row in tmp.rendered_text[0]:
         #for char in row:
         screen.paint(row,int((screen.width/2)-(tmp.max_width/2))+
@@ -22,6 +23,28 @@ def intro(screen):
 
 
 
-
+def deadscreen(game,screen):
+    dtext = "You Have Been Killed"
+    numscore = str(game.score)
+    scoretext = "Score of the Current Run: "+str(numscore)
+    
+    tmp = FigletText(dtext,"doom")
+    hcounter = 0
+    wcounter = 0
+    colorp = []
+    """ for row in tmp.rendered_text[0]:
+        for entry in range(0,tmp.max_width+1) """
+    for row in tmp.rendered_text[0]:
+        #for char in row:
+        screen.print_at(row,int((screen.width/2)-(tmp.max_width/2))+
+        wcounter,int(screen.height/2)-8+hcounter,1,1,0)
+        wcounter += 0
+        hcounter += 1
+    screen.print_at(scoretext,int((screen.width/2)-(len(scoretext)/2))+
+        wcounter,int(screen.height/2)-8+hcounter+1,1,1,0)
+    screen.refresh()
+    #screen.paint(tmp.rendered_text,10,15)
+    None
+    time.sleep(4)
 #screen = Screen.open()
 

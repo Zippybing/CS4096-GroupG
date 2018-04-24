@@ -16,6 +16,7 @@ import GameState
 import sys
 import random
 import copy
+import test1
 
 def MainMenu(game,screen,debug,oldpalette):
     def endgame():
@@ -42,6 +43,7 @@ def MainMenu(game,screen,debug,oldpalette):
         debug[0] = looksy['Debug']
         #visual.blackout(screen)
         main(game,debug,looksy,screen)
+        test1.deadscreen(game,screen)
         DeathMenu(game,screen,debug,oldpalette)
         return Mmenu.data
     
