@@ -17,6 +17,7 @@ def main(game,debug,menudata,screen):
     
 
     while game.hero.isAlive:
+
         game.floor += 1
         game.world.createMap(40,40)
         game.populate()
@@ -25,7 +26,9 @@ def main(game,debug,menudata,screen):
         visual.blackout(screen)
         while game.checkActive():
             if debug[0]:
+                game.hero.actionCap = 60
                 game.world.displayGridnorm()
+
             else:
                 game.world.displayGridH()
             #Hero Turn

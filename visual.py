@@ -50,6 +50,13 @@ def showmaphero(game, screen, debug):
                    int(screen.width/2) - int(len(scoreboard)/2), (int(screen.height)-1),
                     colour=7,
                     bg=0)
+        # Item Display
+        hcounter = 0
+        screen.print_at("Inventory",int(screen.width-13),int(2+hcounter),7,4,0)
+        hcounter += 1
+        for item in game.hero.inventory:
+            screen.print_at(item.name,int(screen.width-13),int(2+hcounter),7,4,0)
+            hcounter += 2
         # User keypress display -- DEBUGGING PURPOSES ONLY
         screen.refresh()
         

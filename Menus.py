@@ -16,6 +16,7 @@ import GameState
 import sys
 import random
 import copy
+import test1
 
 def MainMenu(game,screen,debug,oldpalette):
     def endgame():
@@ -26,6 +27,7 @@ def MainMenu(game,screen,debug,oldpalette):
     def endmenu():
         debug[0] = False
         game = GameState.GameState()
+        game.hero.inventory = []
         Mmenu.save()
         looksy = Mmenu.data
         if looksy['seedval'] != "":
@@ -45,6 +47,7 @@ def MainMenu(game,screen,debug,oldpalette):
         debug[0] = looksy['Debug']
         #visual.blackout(screen)
         main(game,debug,looksy,screen)
+        test1.deadscreen(game,screen)
         DeathMenu(game,screen,debug,oldpalette)
         return Mmenu.data
     
@@ -61,9 +64,7 @@ def MainMenu(game,screen,debug,oldpalette):
     #Mmenu.palette['background'] = (0,0,1)
     Mmenu.palette = oldpalette
     mapping = Layout([100], fill_frame=True)
-
     Mmenu.add_layout(mapping)
-
     mapping.add_widget(Text("Seed:","seedval"))
     mapping.add_widget(Text("Adventurer Name:","nameval"))
     mapping.add_widget(CheckBox("Debug Mode:","Debug","Debug"))
@@ -73,8 +74,7 @@ def MainMenu(game,screen,debug,oldpalette):
     bottomrow.add_widget(Button("Exit Game",endgame),0)
     bottomrow.add_widget(Button("Start Level",endmenu),3)
     Mmenu.fix()
-
-    #return Mmenu
+    
     #Mmenu._on_pic
 
     Scenes = [
@@ -93,6 +93,7 @@ def DeathMenu(game,screen,debug,oldpalette):
         sys.exit(0)
         None
     def Restart():
+        game = GameState.GameState()
         MainMenu(game,screen,debug,oldpalette)
         None
     Dmenu = Frame(screen,
@@ -130,6 +131,18 @@ def DeathMenu(game,screen,debug,oldpalette):
     return Dmenu.data
 
 
+def IntroScreen(screen):
+    text = "The Revengnce of the Bears"
+    tmp = FigletText(text,"doom")
+    hcounter = 0
+    wcounter = 0
+    for row in tmp.rendered_text[0]:
+        #for char in row:
+        screen.paint(row,int((screen.width/2)-(tmp.max_width/2))+
+        wcounter,int(screen.height/2)-8+hcounter,)
+        wcounter += 0
+        hcounter += 1
+    None
 
 
 
