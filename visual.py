@@ -78,6 +78,17 @@ def showmaphero(game, screen, debug):
         #userInput = input('Give input: ').upper()
 
 def showmapmon(game, screen, debug):
+    monsterControl = Config.getValue('visual', 'monsterControl', 'bool')    
+    
+    if debug[0]:
+        if monsterControl:
+            game.world.displayGridnorm()
+        else:
+            game.world.displayGridM()
+    else:
+        if monsterControl:
+            game.world.displayGridM()
+    
     counter = 0
     #input('Give input: ').upper()
 
@@ -118,9 +129,20 @@ def showmapmon(game, screen, debug):
             screen.refresh()
             
             dumpTxt_Monster(game,actions)
-            actions += Turns.monsterTurn(game,monster,debug)
-
-            time.sleep(.1)
+            
+            
+            if monsterControl:
+                dump_keypresses(screen)
+                while True:
+                    keyboardinput = get_keypress_from_screen(screen)
+                    if keyboardinput != "":
+                        screen.print_at(keyboardinput, 0, 0) # prints out user keyboard input
+                        break
+                actions += Turns.monsterTurnHuman(game,monster,debug,keyboardinput)
+            else:
+                actions += Turns.monsterTurnAI(game,monster,debug)
+                time.sleep(.1)
+            
         screen.refresh()
 
 '''
