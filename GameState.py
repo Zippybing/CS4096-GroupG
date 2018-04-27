@@ -132,6 +132,18 @@ class GameState:
             print(generated)
 
         # Place Gems
+        for _ in range(getValue('Entities', 'fireNum', 'int')): # Places Gems
+            randX, randY = self.uniqueGen(generated)
+            placeAble = type(self.world.grid[randX][randY].entity) != Entities.Wall
+            while(not placeAble):
+                randX ,randY = self.uniqueGen(generated)
+                placeAble = type(self.world.grid[randX][randY].entity) != Entities.Wall
+            self.world.placeEntity(randX,randY,Entities.Firecracker(getValue('Entities', 'gemWorth', 'int')))
+            generated.append((randX,randY))
+            print(generated)
+        
+        
+        # Place Gems
         for _ in range(getValue('Entities', 'gemNum', 'int')): # Places Gems
             randX, randY = self.uniqueGen(generated)
             placeAble = type(self.world.grid[randX][randY].entity) != Entities.Wall

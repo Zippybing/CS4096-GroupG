@@ -32,6 +32,9 @@ def heroTurn(game, key, debug):
         # Bad input!
         game.hero.isAlive = False
         return -808080808
+    elif userInput == 'F':
+        # Forfeit turn, deplete action points
+        return -808080808
     if debug[0]:
         game.world.displayGridnorm()
     else:
@@ -99,8 +102,7 @@ def monsterTurnAI(game, monster, debug):
     if debug[0]:
         game.world.displayGridM()
     else:
-        pass
-        #game.world.displayGridM()
+        game.world.displayGridH()
     return actions
 
 def monsterTurnHuman(game ,monster, debug, key):

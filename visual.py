@@ -88,6 +88,8 @@ def showmapmon(game, screen, debug):
     else:
         if monsterControl:
             game.world.displayGridM()
+        else:
+            game.world.displayGridH()
     
     counter = 0
     #input('Give input: ').upper()

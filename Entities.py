@@ -98,6 +98,14 @@ class Shotgun(Item):
         self.rep = [(5,4,2)]
         self.ammo = True
 
+        
+class Firecracker(Item):
+    def __init__(self, scoreMod):
+        self.icon = 'F'
+        self.name = 'Firecracker'
+        Item.__init__(self)
+        self.rep = [(5,4,2)]
+        
 # Non Functional Items, Do Not Use
 class Rock(Item):
     def __init__(self):
