@@ -158,6 +158,7 @@ class WorldGrid:
                             # agent.printInventory() # BREAKS SCREEN RENDERING LOOP
                             # Move hero to space
                             agent.inventory.append(target)
+                            agent.namedinv.append(target.name)
                             self.moveEntity(x1, y1, x2, y2, agent, None)
                         elif type(target) == Entities.Monster:
                             gun = None

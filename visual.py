@@ -5,7 +5,7 @@ from random import randint
 from time import sleep
 import Config
 import Entities
-
+from collections import Counter
 from Config import getValue
 from asciimatics.screen import *
 #from main import mastergrid
@@ -37,7 +37,7 @@ def showmaphero(game, screen, debug):
             #                 bg=randint(0, screen.colours - 1))
 
             screen.paint(row,
-                        int(screen.width/2)-int(game.world.width*3/2),(int(screen.height/4)+linecounter-4),
+                        int(screen.width/2)-int(game.world.width*3/2)-3,(int(screen.height/4)+linecounter-4),
                         7,2,0,
                         colour_map=game.world.vizgrid[1][colortracker])
 
@@ -52,10 +52,14 @@ def showmaphero(game, screen, debug):
                     bg=0)
         # Item Display
         hcounter = 0
+        itemdict = Counter(game.hero.namedinv)
         screen.print_at("Inventory",int(screen.width-13),int(2+hcounter),7,4,0)
         hcounter += 1
-        for item in game.hero.inventory:
-            screen.print_at(item.name,int(screen.width-13),int(2+hcounter),7,4,0)
+        for item in itemdict.items():
+            if item[1] == 1:
+                screen.print_at(item[0],int(screen.width-13),int(2+hcounter),7,4,0)
+            else:
+                screen.print_at(item[0] + "X" + str(item[1]),int(screen.width-13),int(2+hcounter),7,4,0)
             hcounter += 2
         # User keypress display -- DEBUGGING PURPOSES ONLY
         screen.refresh()
