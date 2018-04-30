@@ -17,6 +17,7 @@ import sys
 import random
 import copy
 import test1
+import Config
 
 def MainMenu(game,screen,debug,oldpalette):
     def endgame():

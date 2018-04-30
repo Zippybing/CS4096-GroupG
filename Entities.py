@@ -27,12 +27,13 @@ class Fixture(Entity):
 
 '''Sub-Entities of Creature'''
 class Hero(Creature):
-    def __init__(self, actionCap, name, inventory = []):
+    def __init__(self, actionCap, name, inventory = [],namedinv = []):
         Creature.__init__(self, actionCap, name)
         self.icon = 'H'
         self.rep = [(7,2,2)]       
         self.hasEscaped = False
         self.inventory = inventory
+        self.namedinv = namedinv
         self.noise = 5
         self.visual = 4
         
