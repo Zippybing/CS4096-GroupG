@@ -73,6 +73,7 @@ class GameState:
         # Generate Non-Gem Items
         p, t, s, u = 0, 0, 0, 0
         chance = getValue('GameState', 'chance', 'int') # Chance of item appearing on level (10%)
+        chanceShotgun = getValue('GameState', 'chanceShotgun', 'int')
         
         # Count Instances of Item in Inventory
         for item in self.hero.inventory:
@@ -120,7 +121,7 @@ class GameState:
             print(generated)
             
         # Place Shotgun
-        if u <= 1 and random.randint(1, 100) < 101:
+        if u <= 1 and random.randint(1, 100) < chanceShotgun:
             randX, randY = self.uniqueGen(generated)
             placeAble = type(self.world.grid[randX][randY].entity) != Entities.Wall
             while(not placeAble):
@@ -130,6 +131,18 @@ class GameState:
             generated.append((randX,randY))
             print(generated)
 
+        # Place Gems
+        for _ in range(getValue('Entities', 'fireNum', 'int')): # Places Gems
+            randX, randY = self.uniqueGen(generated)
+            placeAble = type(self.world.grid[randX][randY].entity) != Entities.Wall
+            while(not placeAble):
+                randX ,randY = self.uniqueGen(generated)
+                placeAble = type(self.world.grid[randX][randY].entity) != Entities.Wall
+            self.world.placeEntity(randX,randY,Entities.Firecracker(getValue('Entities', 'gemWorth', 'int')))
+            generated.append((randX,randY))
+            print(generated)
+        
+        
         # Place Gems
         for _ in range(getValue('Entities', 'gemNum', 'int')): # Places Gems
             randX, randY = self.uniqueGen(generated)
@@ -235,4 +248,4 @@ class GameState:
             monsters = 1 # Don't allow game to not spawn any monsters
         elif monsters > monstersMax:
             monsters = monstersMax # Don't allow game to flood level with monsters
-        return monsters+1
+        return monsters

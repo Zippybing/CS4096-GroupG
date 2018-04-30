@@ -1,6 +1,8 @@
 import sys
 import Tile
 import Entities
+import random
+import math
 
 from Config import getValue
 from LevelGenerator import create_level
@@ -136,13 +138,27 @@ class WorldGrid:
                 if issubclass(type(agent),Entities.Creature):
                     #Hero
                     if type(agent) == Entities.Hero:
-                        if issubclass(type(target),Entities.Item):
+                        if type(target) == Entities.Firecracker:
+                            self.moveEntity(x1, y1, x2, y2, agent, None)
+                            randX = random.randint(0,5) * random.randint(-1,1)
+                            randY = random.randint(0,5) * random.randint(-1,1)
+                            placeAble = type(self.grid[randX][randY].entity) != Entities.Wall
+                            farEnough = math.floor(math.sqrt(math.pow(randX,2) + math.pow(randY,2)))
+                            while(not placeAble and farEnough < 3):
+                                randX = random.randint(0,5) * random.randint(-1,1)
+                                randY = random.randint(0,5) * random.randint(-1,1)
+                                placeAble = type(self.grid[randX][randY].entity) != Entities.Wall
+                                farEnough = math.floor(math.sqrt(math.pow(randX,2) + math.pow(randY,2)))
+                            
+                            self.distributeNoise(x2+randX,y2+randY,7)
+                        elif issubclass(type(target),Entities.Item):
                             # print("Picked up item!") # Temporarily removed. Causes problems w/ Mac.
                             # Add item to inventory
                             #agent.addToInventory(target)
                             # agent.printInventory() # BREAKS SCREEN RENDERING LOOP
                             # Move hero to space
                             agent.inventory.append(target)
+                            agent.namedinv.append(target.name)
                             self.moveEntity(x1, y1, x2, y2, agent, None)
                         elif type(target) == Entities.Monster:
                             gun = None

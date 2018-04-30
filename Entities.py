@@ -27,12 +27,13 @@ class Fixture(Entity):
 
 '''Sub-Entities of Creature'''
 class Hero(Creature):
-    def __init__(self, actionCap, name, inventory = []):
+    def __init__(self, actionCap, name, inventory = [],namedinv = []):
         Creature.__init__(self, actionCap, name)
         self.icon = 'H'
         self.rep = [(7,2,2)]       
         self.hasEscaped = False
         self.inventory = inventory
+        self.namedinv = namedinv
         self.noise = 5
         self.visual = 4
         
@@ -98,6 +99,14 @@ class Shotgun(Item):
         self.rep = [(5,4,2)]
         self.ammo = True
 
+        
+class Firecracker(Item):
+    def __init__(self, scoreMod):
+        self.icon = 'F'
+        self.name = 'Firecracker'
+        Item.__init__(self)
+        self.rep = [(5,4,2)]
+        
 # Non Functional Items, Do Not Use
 class Rock(Item):
     def __init__(self):
