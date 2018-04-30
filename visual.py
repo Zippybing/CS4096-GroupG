@@ -37,7 +37,7 @@ def showmaphero(game, screen, debug):
             #                 bg=randint(0, screen.colours - 1))
 
             screen.paint(row,
-                        int(screen.width/2)-int(game.world.width*3/2)-3,(int(screen.height/4)+linecounter-4),
+                        int(screen.width/2)-int(game.world.width*3/2),(int(screen.height/4)+linecounter-4),
                         7,2,0,
                         colour_map=game.world.vizgrid[1][colortracker])
 
