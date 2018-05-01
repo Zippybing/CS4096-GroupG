@@ -107,10 +107,10 @@ def showmapmon(game, screen, debug):
             colortracker = 0
             #for row in mastergrid:
             # Title bar
-            screen.print_at(game.level,
-                    int(screen.width/2) - int(len(game.level)/2), 1,
-                        colour=7,
-                        bg=0)
+            screen.print_at(str(game.name+" is "+game.level),
+                   int(screen.width/2) - int(len(game.level)/2), 1,
+                    colour=7,
+                    bg=0)
             # Map grid
             for row in game.world.vizgrid[0]:
                 # screen.print_at(row,
